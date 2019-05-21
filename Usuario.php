@@ -41,6 +41,21 @@
 		DataGetter::getConn()->exec($sql);
 	}
 
+	
+	public function cadastrar($numero_cadastro, $data, $municipio, $comunidade, $apicultor, $apiario, $propriedade){
+		$sql = 'INSERT INTO CADASTRO VALUES ('. $numero_cadastro . ', ' . $data . ', "' . $municipio . '", "' . $comunidade . '", ' . $apicultor . ', ' . $apiario . ', ' . $propriedade . ')'; 
+	}
+
+	
+	public function cadastrarCaixa($id, $apiario, $colmeia, $material, $melgueira, $local_extracao){
+		$sql = 'INSERT INTO CAIXA VALUES (' . $id . ', ' . $apiario . ', ' . $colmeia . ', ' . $material . ', ' . $melgueira . ', ' . $local_extracao . ')';
+	}
+
+	
+	public function cadastrarMedicaoClimatica($propriedade, $mes, $temperatura, $indice_pluviometrico, $umidade_ar){
+		$sql = 'INSERT INTO MEDICOES_CLIMATICAS VALUES (' . $propriedade . ', ' . $mes . ', ', $temperatura . ', ' . $indice_pluviometrico . ', ' . $umidade_ar . ')';
+	}
+
 	public function recuperarApiarios(){
 		$stmt = DataGetter::getConn()->prepare("SELECT APIARIO.nome as nome, ENDERECO.id as id, ENDERECO.logradouro as logradouro, ENDERECO.numero as numero, ENDERECO.complemento as complemento, ENDERECO.comunidade as comunidade, ENDERECO.bairro as bairro, ENDERECO.cidade as cidade, ENDERECO.estado as estado, ENDERECO.cep as cep, APIARIO.inscricao_estadual as inscricao_estadual, APIARIO.data_fundacao as data_fundacao, APIARIO.tipo_florada as tipo_florada, APIARIO.latitude as latitude, APIARIO.longitude as longitude, APIARIO.expandida as expandida, APIARIO.problema_sanitario as problema_sanitario, APIARIO.num_caixas_povoadas as num_caixas_povoadas, APIARIO.num_caixas_vazias as num_caixas_vazias, APIARIO.tipo_instalacao as tipo_instalacao FROM APIARIO, APICULTOR, PROPRIEDADE, ENDERECO WHERE APIARIO.propriedade = PROPRIEDADE.id AND PROPRIEDADE.endereco = ENDERECO.id");
 		$stmt->execute();
