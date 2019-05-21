@@ -1,10 +1,10 @@
 <?php
 
 	class Quadro{
-		public static int $caixa;
-		public static string $tipo;
-		public static string $fundo;
-		public static string $material;
+		private static int $caixa;
+		private static string $tipo;
+		private static string $fundo;
+		private static string $material;
 
 		public function __construct($caixa, $tipo, $fundo, $material){
 			$this->caixa = $caixa;
@@ -23,24 +23,15 @@
 		}
 
 		public function getTipo(){
-			if ($this->tipo != "") {
-				return $this->tipo;
-			}
-			else return "<strong>Sem Registro</strong>"
+			return $this->tipo;
 		}
 
 		public function getFundo(){
-			if ($this->fundo != "") {
-				return $this->fundo;
-			}
-			else return "<strong>Sem Registro</strong>"
+			return $this->fundo;
 		}
 
 		public function getMaterial(){
-			if ($this->material != "") {
-				return $this->material;
-			}
-			else return "<strong>Sem Registro</strong>"
+			return $this->material;
 		}
 
 		public function setCaixa($caixa){
