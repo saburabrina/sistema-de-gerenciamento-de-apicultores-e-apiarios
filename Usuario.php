@@ -43,19 +43,20 @@
 		DataGetter::getConn()->exec($sql);
 	}
 
-	
 	public function cadastrar($numero_cadastro, $data, $municipio, $comunidade, $apicultor, $apiario, $propriedade){
 		$sql = 'INSERT INTO CADASTRO VALUES ('. $numero_cadastro . ', ' . $data . ', "' . $municipio . '", "' . $comunidade . '", ' . $apicultor . ', ' . $apiario . ', ' . $propriedade . ')'; 
+		DataGetter::getConn()->exec($sql);
+	}
+
+	public function cadastrarApicultor($cpf, $endereco, $trabalha_em, $nome, $certificacao, $email, $telefone, $producao_anual, $perfil, $vinculo) {
+		$sql = 'INSERT INTO APICULTOR VALUES (' . $cpf . ', ' . $endereco . ', ' . $trabalha_em . ', '" . $nome . "', ' . $certificacao . ', ' . $email . ', ' . $telefone . ', ' . $producao_anual . ', ' . $perfil . ', ' . $vinculo . ')';
+		DataGetter::getConn()->exec($sql);
 	}
 
 	
 	public function cadastrarCaixa($id, $apiario, $colmeia, $material, $melgueira, $local_extracao){
 		$sql = 'INSERT INTO CAIXA VALUES (' . $id . ', ' . $apiario . ', ' . $colmeia . ', ' . $material . ', ' . $melgueira . ', ' . $local_extracao . ')';
-	}
-
-	
-	public function cadastrarMedicaoClimatica($propriedade, $mes, $temperatura, $indice_pluviometrico, $umidade_ar){
-		$sql = 'INSERT INTO MEDICOES_CLIMATICAS VALUES (' . $propriedade . ', ' . $mes . ', ', $temperatura . ', ' . $indice_pluviometrico . ', ' . $umidade_ar . ')';
+		DataGetter::getConn()->exec($sql);
 	}
 
 	public function cadastrarPropriedade($id, $endereco, $area_destinada){
