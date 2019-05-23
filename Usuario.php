@@ -473,98 +473,56 @@
 		return $condicoes;
 	}
 
-	public function editarApicultor($cpf /* ID */, $nome, $certificacao, $email, $telefone, $producao_anual, $perfil, $vinculo, $endereco /* chave estrangeira */, $trabalha_em /* chave estrangeira */){
+	public function editarApicultor($apicultor){
 
-		$sql_nome = "UPDATE APICULTOR SET nome = '" . $nome . "' WHERE cpf = '" . $cpf . "'";
-		$sql_certificacao = "UPDATE APICULTOR SET certificacao = '" . $certificacao . "' WHERE cpf = '" . $cpf . "'";
-		$sql_email = "UPDATE APICULTOR SET email = '" . $email . "' WHERE cpf = '" . $cpf . "'";
-		$sql_telefone = "UPDATE APICULTOR SET telefone = '" . $telefone . "' WHERE cpf = '" . $cpf . "'";
-		$sql_producao_anual = "UPDATE APICULTOR SET producao_anual = '" . $producao_anual . "' WHERE cpf = '" . $cpf . "'";
-		$sql_perfil = "UPDATE APICULTOR SET perfil = '" . $perfil . "' WHERE cpf = '" . $cpf . "'";
-		$sql_vinculo = "UPDATE APICULTOR SET vinculo = '" . $vinculo . "' WHERE cpf = '" . $cpf . "'";
+		$sql = "UPDATE APICULTOR SET nome = '" . $apicultor->getNome() . "' SET certificacao = '" . $apicultor->getCertificacao() . "' SET email = '" . $apicultor->getEmail() . "' SET telefone = '" . $apicultor->getTelefone() . "' SET producao_anual = '" . $apicultor->getProducaoAnual() . "' SET perfil = '" . $apicultor->getPerfil() . "' SET vinculo = '" . $apicultor->getVinculo() . "' SET endereco = '" . $apicultor->getEndereco()->getId() . "' SET trabalha_em = '" . $apicultor->getTrabalhaEm()->getId() . "' WHERE cpf = '" . $apicultor->getCpf() . "'";
 
-		$stmt_nome = DataGetter::getConn()->prepare($sql_nome);
-		$stmt_certificacao = DataGetter::getConn()->prepare($sql_certificacao);
-		$stmt_email = DataGetter::getConn()->prepare($sql_email);
-		$stmt_telefone = DataGetter::getConn()->prepare($sql_telefone);
-		$stmt_producao_anual = DataGetter::getConn()->prepare($sql_producao_anual);
-		$stmt_perfil = DataGetter::getConn()->prepare($sql_perfil);
-		$stmt_vinculo = DataGetter::getConn()->prepare($sql_vinculo);
+		$stmt = DataGetter::getConn()->prepare($sql);
+		$stmt->execute();
 
-		$stmt_nome->execute();
-		$stmt_certificacao->execute();
-		$stmt_email->execute();
-		$stmt_telefone->execute();
-		$stmt_producao_anual->execute();
-		$stmt_perfil->execute();
-		$sql_vinculo->execute();
-
-		if ($stmt_nome->rowCount() == 0 || $stmt_certificacao->rowCount() == 0 || $stmt_email->rowCount() == 0 
-		|| $stmt_telefone->rowCount() == 0 || $stmt_producao_anual->rowCount() == 0 || $stmt_perfil->rowCount() == 0
-		|| $stmt_vinculo->rowCount() == 0) {
-			return false;
+		if ($stmt->rowCount() > 0) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 
-	public function editarCadastro($numero_cadastro /* ID */, $apicultor /* chave estrangeira */, $apiario /* chave estrangeira */, $propriedade /* chave estrangeira */, $data, $municipio, $comunidade){
+	public function editarCadastro($cadastro){
 
-		$sql_data = "UPDATE CADASTRO SET data = '" . $data . "' WHERE numero_cadastro = '" . $numero_cadastro . "'";
-		$sql_municipio = "UPDATE CADASTRO SET municipio = '" . $municipio . "' WHERE numero_cadastro = '" . $numero_cadastro . "'";
-		$sql_comunidade = "UPDATE CADASTRO SET comunidade = '" . $comunidade . "' WHERE numero_cadastro = '" . $numero_cadastro . "'";
+		$sql = "UPDATE CADASTRO SET apicultor = '" . $cadastro->getApicultor()->getCpf() . "' SET apiario = '" . $cadastro->getApiario()->getNome() . "' SET propriedade = '" . $cadastro->getPropriedade()->getId() . "' SET data = '" . $cadastro->getData() . "' SET municipio = '" . $cadastro->getMunicipio() . "' SET comunidade = '" . $cadastro->getComunidade() . "' WHERE numero_cadastro = '" . $numero_cadastro . "'";
 
-		$stmt_data = DataGetter::getConn()->prepare($sql_data);
-		$stmt_municipio = DataGetter::getConn()->prepare($sql_municipio);
-		$stmt_comunidade = DataGetter::getConn()->prepare($sql_comunidade);
+		$stmt = DataGetter::getConn()->prepare($sql);
+		$stmt->execute();
 
-		$stmt_data->execute();
-		$stmt_municipio->execute();
-		$stmt_comunidade->execute();
-
-		if ($stmt_data->rowCount() == 0 || $stmt_municipio->rowCount() == 0 || $stmt_comunidade->rowCount() == 0) {
-			return false;
+		if ($stmt->rowCount() > 0) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 
-	public function editarCaixa($id /* ID */, $apiario /* chave estrangeira */, $colmeia /* chave estrangeira */, $material, $melgueiras, $local_extracao){
+	public function editarCaixa($caixa){
 
-		$sql_material = "UPDATE CAIXA SET material = '" . $material . "' WHERE id = '" . $id . "'";
-		$sql_melgueiras = "UPDATE CAIXA SET melgueiras = '" . $melgueiras . "' WHERE id = '" . $id . "'";
-		$sql_local_extracao = "UPDATE CAIXA SET local_extracao = '" . $local_extracao . "' WHERE id = '" . $id . "'";
+		$sql = "UPDATE CAIXA SET apiario = '" . $caixa->getApiario()->getNome() . "' SET colmeia = '" . $caixa->getColmeia()->getId() . "' SET material = '" . $caixa->getMaterial() . "' SET melgueiras = '" . $caixa->getMelgueiras() . "' SET local_extracao = '" . $caixa->getLocalExtracao() . "' WHERE id = '" . $id . "'";
 
-		$stmt_material = DataGetter::getConn()->prepare($sql_material);
-		$stmt_melgueiras = DataGetter::getConn()->prepare($sql_melgueiras);
-		$stmt_local_extracao = DataGetter::getConn()->prepare($sql_local_extracao);
+		$stmt = DataGetter::getConn()->prepare($sql);
+		$stmt->execute();
 
-		$stmt_material->execute();
-		$stmt_melgueiras->execute();
-		$stmt_local_extracao->execute();
-
-		if ($stmt_material->rowCount() == 0 || $stmt_melgueiras->rowCount() == 0 || $stmt_local_extracao->rowCount() == 0) {
-			return false;
+		if ($stmt->rowCount() > 0) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 
-	public function editarMedicoesClimaticas($propriedade /* ID e chave estrangeira*/, $mes /* ID */, $temperatura, $indice_pluviometrico, $umidade_ar){
+	public function editarMedicoesClimaticas($medicoes_climaticas){
 
-		$sql_temperatura = "UPDATE CAIXA SET temperatura = '" . $temperatura . "' WHERE propriedade = '" . $propriedade . "' AND mes = '" . $mes . "'";
-		$sql_indice_pluviometrico = "UPDATE CAIXA SET indice_pluviometrico = '" . $indice_pluviometrico . "' WHERE propriedade = '" . $propriedade . "' AND mes = '" . $mes . "'";
-		$sql_umidade_ar = "UPDATE CAIXA SET umidade_ar = '" . $umidade_ar . "' WHERE propriedade = '" . $propriedade . "' AND mes = '" . $mes . "'";
+		$sql = "UPDATE CAIXA SET temperatura = '" . $medicoes_climaticas->getTemperatura() . "' SET indice_pluviometrico = '" . $medicoes_climaticas->getIndicePluviometrico() . "' SET umidade_ar = '" . $medicoes_climaticas->getUmidadeAr() . "' WHERE propriedade = '" . $medicoes_climaticas->getPropriedade()->getId() . "' AND mes = '" . $medicoes_climaticas->getMes() . "'";
 
-		$stmt_temperatura = DataGetter::getConn()->prepare($sql_temperatura);
-		$stmt_indice_pluviometrico = DataGetter::getConn()->prepare($sql_indice_pluviometrico);
-		$stmt_umidade_ar = DataGetter::getConn()->prepare($sql_umidade_ar);
+		$stmt = DataGetter::getConn()->prepare($sql);
+		$stmt->execute();
 
-		$stmt_temperatura->execute();
-		$stmt_indice_pluviometrico->execute();
-		$stmt_umidade_ar->execute();
-
-		if ($stmt_temperatura->rowCount() == 0 || $stmt_indice_pluviometrico->rowCount() == 0 || $stmt_umidade_ar->rowCount() == 0) {
-			return false;
+		if ($stmt->rowCount() > 0) {
+			return true;
 		}
-		return true;
+		return false;
 
 	}
 
