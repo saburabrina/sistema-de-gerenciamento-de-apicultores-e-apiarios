@@ -6,7 +6,6 @@
         private $material;
         private $melgueira;
         private $local_extracao;
-	}
 
 	function __contruct($id, $apiario, $colmeia, $material, $melgueira, $local_extracao) {
         $this->id = $id;
@@ -63,5 +62,7 @@
 
     public function setLocalExtracao($local_extracao){
         $this->local_extracao = $local_extracao;
-	}
+    }
+    
+}
 ?>
