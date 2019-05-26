@@ -6,10 +6,12 @@
 	require_once('Amostra.php');
 	require_once('Caixa.php');
 	require_once('Colmeia.php');
+	require_once('ControleVeterinario.php');
 	require_once('Endereco.php');
 	require_once('Fumegador.php');
 	require_once('MedicoesClimaticas.php');
 	require_once('Propriedade.php');
+	require_once('Producao.php');
 
 	class Usuario {
 		private $nome;
@@ -41,19 +43,37 @@
 		DataGetter::getConn()->exec($sql);
 	}
 
-	
 	public function cadastrar($numero_cadastro, $data, $municipio, $comunidade, $apicultor, $apiario, $propriedade){
 		$sql = 'INSERT INTO CADASTRO VALUES ('. $numero_cadastro . ', ' . $data . ', "' . $municipio . '", "' . $comunidade . '", ' . $apicultor . ', ' . $apiario . ', ' . $propriedade . ')'; 
+		DataGetter::getConn()->exec($sql);
+	}
+
+	public function cadastrarApicultor($cpf, $endereco, $trabalha_em, $nome, $certificacao, $email, $telefone, $producao_anual, $perfil, $vinculo) {
+		$sql = 'INSERT INTO APICULTOR VALUES (' . $cpf . ', ' . $endereco . ', ' . $trabalha_em . ', '" . $nome . "', ' . $certificacao . ', ' . $email . ', ' . $telefone . ', ' . $producao_anual . ', ' . $perfil . ', ' . $vinculo . ')';
+		DataGetter::getConn()->exec($sql);
 	}
 
 	
 	public function cadastrarCaixa($id, $apiario, $colmeia, $material, $melgueira, $local_extracao){
 		$sql = 'INSERT INTO CAIXA VALUES (' . $id . ', ' . $apiario . ', ' . $colmeia . ', ' . $material . ', ' . $melgueira . ', ' . $local_extracao . ')';
+		DataGetter::getConn()->exec($sql);
 	}
 
-	
-	public function cadastrarMedicaoClimatica($propriedade, $mes, $temperatura, $indice_pluviometrico, $umidade_ar){
-		$sql = 'INSERT INTO MEDICOES_CLIMATICAS VALUES (' . $propriedade . ', ' . $mes . ', ', $temperatura . ', ' . $indice_pluviometrico . ', ' . $umidade_ar . ')';
+	public function cadastrarPropriedade($id, $endereco, $area_destinada){
+		$sql = 'INSERT INTO PROPRIEDADE VALUES (' . $id . ',' . $endereco . ',' . $area_destinada . ')';
+		DataGetter::getConn()->exec($sql);
+	}
+
+	public function cadastrarControleVeterinario($id, $apiario, $data_exame, $condicao_vet_geral, $nome_veterinario, $crmv_veterinario){
+		$sql = 'INSERT INTO CONTROLE_VETERINARIO VALUES (' . $id . ',' . $apiario . ',' . $data_exame . ',' . $condicao_vet_geral . ',' . $nome_veterinario . ',' . $crmv_veterinario . ')';
+		DataGetter::getConn()->exec($sql);
+
+	}
+
+	public function cadastrarProducao($apiario, $rotulo, $destino, $tipo, $material){
+		$sql = 'INSERT INTO PRODUCAO VALUES (' . $apiario . ',' . $rotulo . ',' . $destino . ',' . $tipo . ',' . $material . ')';
+		DataGetter::getConn->exec($sql);
+
 	}
 
 	public function recuperarApiarios(){
@@ -145,7 +165,7 @@
 
 		$apicultores = array();
 		while($apicultor = $stmt->setFetchMode(PDO::FETCH_ASSOC)){
-			array_push($apicultores, new new Apicultor($apicultor['cpf'], $apicultor['nome'], null, null, null, null, null, null, null, null);
+			array_push($apicultores, new new Apicultor($apicultor['cpf'], $apicultor['nome'], null, null, null, null, null, null, null, null));
 		}
 
 		return $apicultores;
@@ -158,7 +178,7 @@
 
 		$propriedades = array();
 		while($propriedade = $stmt->setFetchMode(PDO::FETCH_ASSOC)){
-			array_push($propriedades, new new Propriedade($propriedade['id'], new Endereco($apiario['id'], $apiario['logradouro'], $apiario['numero'], $apiario['complemento'], $apiario['comunidade'], $apiario['bairro'], $apiario['cidade'], $apiario['estado'], $apiario['cep']), $propriedade['area_destinada']);
+			array_push($propriedades, new new Propriedade($propriedade['id'], new Endereco($apiario['id'], $apiario['logradouro'], $apiario['numero'], $apiario['complemento'], $apiario['comunidade'], $apiario['bairro'], $apiario['cidade'], $apiario['estado'], $apiario['cep']), $propriedade['area_destinada']));
 		}
 
 		return $propriedades;	
@@ -451,6 +471,59 @@
 		}
 
 		return $condicoes;
+	}
+
+	public function editarApicultor($apicultor){
+
+		$sql = "UPDATE APICULTOR SET nome = '" . $apicultor->getNome() . "' SET certificacao = '" . $apicultor->getCertificacao() . "' SET email = '" . $apicultor->getEmail() . "' SET telefone = '" . $apicultor->getTelefone() . "' SET producao_anual = '" . $apicultor->getProducaoAnual() . "' SET perfil = '" . $apicultor->getPerfil() . "' SET vinculo = '" . $apicultor->getVinculo() . "' SET endereco = '" . $apicultor->getEndereco()->getId() . "' SET trabalha_em = '" . $apicultor->getTrabalhaEm()->getId() . "' WHERE cpf = '" . $apicultor->getCpf() . "'";
+
+		$stmt = DataGetter::getConn()->prepare($sql);
+		$stmt->execute();
+
+		if ($stmt->rowCount() > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public function editarCadastro($cadastro){
+
+		$sql = "UPDATE CADASTRO SET apicultor = '" . $cadastro->getApicultor()->getCpf() . "' SET apiario = '" . $cadastro->getApiario()->getNome() . "' SET propriedade = '" . $cadastro->getPropriedade()->getId() . "' SET data = '" . $cadastro->getData() . "' SET municipio = '" . $cadastro->getMunicipio() . "' SET comunidade = '" . $cadastro->getComunidade() . "' WHERE numero_cadastro = '" . $numero_cadastro . "'";
+
+		$stmt = DataGetter::getConn()->prepare($sql);
+		$stmt->execute();
+
+		if ($stmt->rowCount() > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public function editarCaixa($caixa){
+
+		$sql = "UPDATE CAIXA SET apiario = '" . $caixa->getApiario()->getNome() . "' SET colmeia = '" . $caixa->getColmeia()->getId() . "' SET material = '" . $caixa->getMaterial() . "' SET melgueiras = '" . $caixa->getMelgueiras() . "' SET local_extracao = '" . $caixa->getLocalExtracao() . "' WHERE id = '" . $id . "'";
+
+		$stmt = DataGetter::getConn()->prepare($sql);
+		$stmt->execute();
+
+		if ($stmt->rowCount() > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public function editarMedicoesClimaticas($medicoes_climaticas){
+
+		$sql = "UPDATE CAIXA SET temperatura = '" . $medicoes_climaticas->getTemperatura() . "' SET indice_pluviometrico = '" . $medicoes_climaticas->getIndicePluviometrico() . "' SET umidade_ar = '" . $medicoes_climaticas->getUmidadeAr() . "' WHERE propriedade = '" . $medicoes_climaticas->getPropriedade()->getId() . "' AND mes = '" . $medicoes_climaticas->getMes() . "'";
+
+		$stmt = DataGetter::getConn()->prepare($sql);
+		$stmt->execute();
+
+		if ($stmt->rowCount() > 0) {
+			return true;
+		}
+		return false;
+
 	}
 
 ?>

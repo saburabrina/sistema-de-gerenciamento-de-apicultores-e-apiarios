@@ -69,7 +69,7 @@
         return $this->producao_anual;
     }
 
-    public function setNome($producao_anual){
+    public function setProducaoAnual($producao_anual){
         $this->producao_anual = $producao_anual;
     }
 

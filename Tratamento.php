@@ -1,14 +1,14 @@
 <?php
 	
 	class Tratamento {
-		public static int $colmeia;
-		public static int $quantidade_doses;
-		public static string $forma_dosagem;
-		public static string $doenca;
-		public static string $produto;
-		public static /* date */ $data_tratamento;
-		public static string $nome_veterinario;
-		public static string $crmv_veterinario;
+		private static int $colmeia;
+		private static int $quantidade_doses;
+		private static string $forma_dosagem;
+		private static string $doenca;
+		private static string $produto;
+		private static string $data_tratamento; # date
+		private static string $nome_veterinario;
+		private static string $crmv_veterinario;
 
 		public function __construct($colmeia, $quantidade_doses, $forma_dosagem, $doenca, $produto, $data_tratamento, $nome_veterinario, $crmv_veterinario){
 			$this->colmeia = $colmeia;
@@ -35,40 +35,27 @@
 		}
 
 		public function getFormaDosagem(){
-			if ($this->forma_dosagem != "") {
-				return $this->forma_dosagem;
-			}
-			else return "<strong>Sem Registro</strong>"
+			return $this->forma_dosagem;
 		}
 
 		public function getDoenca(){
-			if ($this->doenca != "") {
-				return $this->doenca;
-			}
-			else return "<strong>Sem Registro</strong>"
+			return $this->doenca;
 		}
 
 		public function getProduto(){
-			if ($this->produto != "") {
-				return $this->produto;
-			}
-			else return "<strong>Sem Registro</strong>"
+			return $this->produto;
 		}
 
-		######## data_tratamento
+		public function getDataTratamento(){
+			return $this->data_tratamento;
+		}
 
 		public function getNomeVeterinario(){
-			if ($this->nome_veterinario != "") {
-				return $this->nome_veterinario;
-			}
-			else return "<strong>Sem Registro</strong>"
+			return $this->nome_veterinario;
 		}
 
 		public function getCRMVVeterinario(){
-			if ($this->crmv_veterinario != "") {
-				return $this->crmv_veterinario;
-			}
-			else return "<strong>Sem Registro</strong>"
+			return $this->crmv_veterinario;
 		}
 
 		public function setColmeia($colmeia){
@@ -91,7 +78,9 @@
 			$this->produto = $produto;
 		}
 
-		######## data_tratamento
+		public function setDataTratamento($data_tratamento){
+			$this->data_tratamento = $data_tratamento;
+		}
 
 		public function setNomeVeterinario($nome_veterinario){
 			$this->nome_veterinario = $nome_veterinario;

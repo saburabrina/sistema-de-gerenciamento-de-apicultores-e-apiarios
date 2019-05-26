@@ -1,13 +1,13 @@
 <?php
 	
 	class Cadastro{
-		public static int $numero_cadastro;
-		public static string $apicultor;
-		public static string $apiario;
-		public static int $propriedade;
-		public static /*date */ $data;
-		public static string $municipio;
-		public static string $comunidade;
+		private static int $numero_cadastro;
+		private static string $apicultor;
+		private static string $apiario;
+		private static int $propriedade;
+		private static string $data; # date
+		private static string $municipio;
+		private static string $comunidade;
 
 		public function __construct($numero_cadastro, $apicultor, $apiario, $propriedade, $data, $municipio, $comunidade){
 			$this->numero_cadastro = $numero_cadastro;
@@ -29,37 +29,27 @@
 		}
 
 		public function getApicultor(){
-			if ($this->apicultor != "") {
-				return $this->apicultor;
-			}
-			else return "<strong>Sem Registro</strong>"
+			return $this->apicultor;
 		}
 
 		public function getApiario(){
-			if ($this->apiario != "") {
-				return $this->apiario;
-			}
-			else return "<strong>Sem Registro</strong>"
+			return $this->apiario;
 		}
 
 		public function getPropriedade(){
 			return $this->propriedade;
 		}
 
-		######## data
+		public function getData(){
+			return $this->data;
+		}
 
 		public function getMunicipio(){
-			if ($this->municipio != "") {
-				return $this->municipio;
-			}
-			else return "<strong>Sem Registro</strong>"
+			return $this->municipio;
 		}
 
 		public function getComunidade(){
-			if ($this->comunidade != "") {
-				return $this->comunidade;
-			}
-			else return "<strong>Sem Registro</strong>"
+			return $this->comunidade;
 		}
 
 		public function setNumeroCadastro($numero_cadastro){
@@ -78,8 +68,9 @@
 			$this->propriedade = $propriedade;
 		}
 
-		######## data
-
+		public function setData($data){
+			$this->data = $data;
+		}
 		public function setMunicipio($municipio){
 			$this->municipio = $municipio;
 		}

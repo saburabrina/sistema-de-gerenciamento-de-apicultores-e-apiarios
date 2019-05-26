@@ -1,10 +1,10 @@
 <?php  
 	class Producao {
-		public static string $apiario;
-		public static boolean $rotulo;
-		public static string $destino;
-		public static string $tipo;
-		public static string $material;
+		private static string $apiario;
+		private static boolean $rotulo;
+		private static string $destino;
+		private static string $tipo;
+		private static string $material;
 
 		public function __construct($apiario, $rotulo, $destino, $tipo, $material){
 			$this->apiario = $apiario;
@@ -20,10 +20,7 @@
 
 		# Getters and Setters
 		public function getApiario(){
-			if ($this->apiario != "") {
-				return $this->apiario;
-			}
-			else return "<strong>Sem Registro</strong>"
+			return $this->apiario;
 		}
 
 		public function getRotulo(){
@@ -31,24 +28,15 @@
 		}
 
 		public function getDestino(){
-			if ($this->destino != "") {
-				return $this->destino;
-			}
-			else return "<strong>Sem Registro</strong>"
+			return $this->destino;
 		}
 
 		public function getTipo(){
-			if ($this->tipo != "") {
-				return $this->tipo;
-			}
-			else return "<strong>Sem Registro</strong>"
+			return $this->tipo;
 		}
 
 		public function getMaterial(){
-			if ($this->material != "") {
-				return $this->material;
-			}
-			else return "<strong>Sem Registro</strong>"
+			return $this->material;
 		}
 
 		public function setApiario($apiario){
