@@ -473,9 +473,47 @@
 		return $condicoes;
 	}
 
+	public function editarApiario($apiario){
+		$sql = "UPDATE APIARIO SET nome = '" . $apiario->getNome() . "' SET dono = '" . $apiario->getDono() . "' SET propriedade = '" . $apiario->getPropriedade() . "' . SET inscricaoEstadual = '" . $apiario->getInscricaoEstadual() . "' . SET dataFundacao = '" . $apiario->getDataFundacao() . "' . SET tipoFlorada = '" $apiario->getTipoFlorada() . "' . SET latidade = '" $apiario->getLatitude "' . SET longitudade = '" . $apiario->getLongitude() . "' . SET expandida = '" . $apiario->getExpandida() . "' . SET problemaSanitario = '" . $apiario->getProblemaSanitario() . "' . SET numeroCaixasPovoadas = '" . $apiario->getNumeroCaixasPovoadas() . "' . SET numeroCaixasVazias = '" . $apiario->getNumeroCaixasVazias() . "' . SET instalacao = '" . $apiario->getInstalacao() . "'";
+		
+		$stmt = DataGetter::getConn()->prepare($sql);
+		$stmt->execute();
+
+		if ($stmt->rowCount() > 0) {
+			return true;
+		}
+		return false;
+	}
+
 	public function editarApicultor($apicultor){
 
 		$sql = "UPDATE APICULTOR SET nome = '" . $apicultor->getNome() . "' SET certificacao = '" . $apicultor->getCertificacao() . "' SET email = '" . $apicultor->getEmail() . "' SET telefone = '" . $apicultor->getTelefone() . "' SET producao_anual = '" . $apicultor->getProducaoAnual() . "' SET perfil = '" . $apicultor->getPerfil() . "' SET vinculo = '" . $apicultor->getVinculo() . "' SET endereco = '" . $apicultor->getEndereco()->getId() . "' SET trabalha_em = '" . $apicultor->getTrabalhaEm()->getId() . "' WHERE cpf = '" . $apicultor->getCpf() . "'";
+
+		$stmt = DataGetter::getConn()->prepare($sql);
+		$stmt->execute();
+
+		if ($stmt->rowCount() > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public function editarFumegador($fumegador){
+
+		$sql = "UPDATE FUMEGADOR SET apicultor = '" . $fumegador->getApicultor() . "' SET produto_utilizado = '" . $fumegador->getProdutoUtilizado() . "'";
+
+		$stmt = DataGetter::getConn()->prepare($sql);
+		$stmt->execute();
+
+		if ($stmt->rowCount() > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public function editarProducao($producao){
+
+		$sql = "UPDATE PRODUCAO SET apiario = '" . $producao->getApiario() . "' SET rotulo = '" . $producao->getRotulo() . "' SET destino = '" . $producao->getDestino() . "' SET tipo = '" . $producao->getTipo() . "' SET material = '" . $producao->getMaterial() . "'";
 
 		$stmt = DataGetter::getConn()->prepare($sql);
 		$stmt->execute();
