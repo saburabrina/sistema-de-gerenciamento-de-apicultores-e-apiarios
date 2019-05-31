@@ -281,11 +281,19 @@
                               if($apiarios[$_GET['apiario']]->getInstalacao() == 'proprio'){
                                 echo'
                                 <option value="proprio" selected>Recurso Próprio</option>
-                                <option value="financiada">Financiada</option>';
+                                <option value="financiada">Financiada</option>
+                                <option value="arrendada">Arrendada</option>';
                               } else if($apiarios[$_GET['apiario']]->getInstalacao() == 'financiada'){
                                 echo'
                                 <option value="proprio">Recurso Próprio</option>
-                                <option value="financiada" selected>Financiada</option>';
+                                <option value="financiada" selected>Financiada</option>
+                                <option value="arrendada">Arrendada</option>';
+                              }
+                              else {
+                                echo'
+                                <option value="proprio">Recurso Próprio</option>
+                                <option value="financiada">Financiada</option>
+                                <option value="arrendada" selected>Arrendada</option>';
                               }
                             ?>                            
                           </select>
@@ -322,12 +330,12 @@
                           <div><label>Já houve problema sanitário?</label></div>
                           <div class="form-check-inline">
                             <label class="form-check-label">
-                              <input type="radio" class="form-check-input" name="sanitario">Sim
+                              <input type="radio" class="form-check-input" value="sim" name="sanitario">Sim
                             </label>
                           </div>
                           <div class="form-check-inline">
                             <label class="form-check-label">
-                              <input type="radio" class="form-check-input" name="sanitario">Não
+                              <input type="radio" class="form-check-input" value="nao" name="sanitario">Não
                             </label>
                           </div>
                         </div>
@@ -340,12 +348,12 @@
                           <div><label>Pode ser expandido?</label></div>
                           <div class="form-check-inline">
                             <label class="form-check-label">
-                              <input type="radio" class="form-check-input" name="expandido">Sim
+                              <input type="radio" class="form-check-input" value="sim" name="expandido">Sim
                             </label>
                           </div>
                           <div class="form-check-inline">
                             <label class="form-check-label">
-                              <input type="radio" class="form-check-input" name="expandido">Não
+                              <input type="radio" class="form-check-input" value="nao" name="expandido">Não
                             </label>
                           </div>
                         </div>
@@ -354,7 +362,7 @@
 
                     <input type="hidden" id="propriedade" name="propriedade" value="<?php echo $apiarios[$_GET['apiario']]->getPropriedade(); ?>"> 
 
-                    <button type="submit" class="btn btn-success btn-block">Salvar</button>
+                    <button type="submit" name="submit" class="btn btn-success btn-block">Salvar</button>
                   </form>
                 </div>
               </div>

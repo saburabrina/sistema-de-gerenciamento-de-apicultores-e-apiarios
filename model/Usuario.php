@@ -1,6 +1,5 @@
 <?php
 	/*
-	editar apiario
 	editar caixa
 	editar medição climatica
 	excluir medição climatica
@@ -1229,6 +1228,17 @@
 			}
 
 			return $apicultores;
+		}
+
+		public function editarApiario($apiario){
+			$sql = "UPDATE APIARIO SET nome = '" . $apiario->getNome() . "' SET dono = '" . $apiario->getDono() . "' SET propriedade = '" . $apiario->getPropriedade() . "' . SET inscricaoEstadual = '" . $apiario->getInscricaoEstadual() . "' . SET dataFundacao = '" . $apiario->getDataFundacao() . "' . SET tipoFlorada = '" $apiario->getTipoFlorada() . "' . SET latidade = '" $apiario->getLatitude "' . SET longitudade = '" . $apiario->getLongitude() . "' . SET expandida = '" . $apiario->getExpandida() . "' . SET problemaSanitario = '" . $apiario->getProblemaSanitario() . "' . SET numeroCaixasPovoadas = '" . $apiario->getNumeroCaixasPovoadas() . "' . SET numeroCaixasVazias = '" . $apiario->getNumeroCaixasVazias() . "' . SET instalacao = '" . $apiario->getInstalacao() . "'";
+			
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+			if ($stmt->rowCount() > 0) {
+				return true;
+			}
+			return false;
 		}
 
 	}

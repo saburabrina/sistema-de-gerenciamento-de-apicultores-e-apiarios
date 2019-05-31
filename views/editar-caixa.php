@@ -253,7 +253,7 @@
 
                     <input type="hidden" id="apiario" name="apiario" class="form-control" value="<?php echo $caixas[$_GET['caixa']]->getApiario()->getNome(); ?>">
                     
-                    <button type="submit" class="btn btn-success btn-block">Salvar</button>
+                    <button type="submit" name="submit" class="btn btn-success btn-block">Salvar</button>
                   </form>
                 </div>
               </div>
