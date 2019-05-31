@@ -26,9 +26,21 @@
 
 
 	  	$usuario = new Usuario($_SESSION['nome'], $_SESSION['cpf'], $_SESSION['email'], $_SESSION['senha']);
-	  	$usuario->cadastrarColmeia($especie, $origem, $data_troca);
+	  	$status = $usuario->cadastrarColmeia($especie, $origem, $data_troca);
+
+	  	if ($status) {
+			# code...
+		} else {
+
+		}
 
 	  	$colmeia = $usuario->recuperarIdColmeia($especie, $origem, $data_troca);
-	  	$usuario->cadastrarCaixa($apiario, $colmeia, $material, $melgueira, $local_extracao);
+	  	$status_caixa = $usuario->cadastrarCaixa($apiario, $colmeia, $material, $melgueira, $local_extracao);
+
+	  	if ($status_caixa) {
+			# code...
+		} else {
+
+		}
 	}
 ?>

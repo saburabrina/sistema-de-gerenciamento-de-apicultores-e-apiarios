@@ -4,7 +4,6 @@
 	editar caixa
 	editar medição climatica
 	excluir medição climatica
-	cadastrar producao anual
 	buscar produção anual
 	editar produção anual
 	excluir produção anual
@@ -100,6 +99,12 @@
 
 
 			$stmt = DataGetter::getConn()->prepare($sql);
+
+			if($stmt->execute()){
+				return True;
+			} else {
+				return False;
+			}
 		}
 
 		public function cadastrarFumegador($apicultor, $produtoUtilizado){
@@ -127,16 +132,34 @@
 		public function cadastrarCaixa($apiario, $colmeia, $material, $melgueira /* int */ , $local_extracao){
 			$sql = 'INSERT INTO CAIXA (apiario, colmeia, material, melgueira , local_extracao) VALUES (' . $apiario . ', ' . $colmeia . ', ' . $material . ', ' . $melgueira . ', ' . $local_extracao . ')';
 			DataGetter::getConn()->exec($sql);
+
+			if($stmt->execute()){
+				return True;
+			} else {
+				return False;
+			}
 		}
 
 		public function cadastrarColmeia($especie_abelha /* varchar(45) */, $origem /* varchar(45) */, $data_troca_rainha /* DATE/STRING */){
 			$sql = 'INSERT INTO COLMEIA (especie_abelha, origem, data_troca_rainha) VALUES (' . $especie_abelha . ', ' . $origem . ', ' . $data_troca_rainha . ')';
 			DataGetter::getConn()->exec($sql);
+
+			if($stmt->execute()){
+				return True;
+			} else {
+				return False;
+			}
 		}
 
 		public function cadastrarControleVeterinario($apiario, $data_exame, $condicao_vet_geral, $nome_veterinario, $crmv_veterinario){
 			$sql = 'INSERT INTO CONTROLE_VETERINARIO (apiario, data_exame, condicao_vet_geral, nome_veterinario, crmv_veterinario) VALUES (' . $apiario . ',' . $data_exame . ',' . $condicao_vet_geral . ',' . $nome_veterinario . ',' . $crmv_veterinario . ')';
 			DataGetter::getConn()->exec($sql);
+
+			if($stmt->execute()){
+				return True;
+			} else {
+				return False;
+			}
 
 		}
 
@@ -144,17 +167,46 @@
 			$sql = 'INSERT INTO CONTROLE_VETERINARIO (controle_veterinario, tipo_abelha, material_biologico, mel) VALUES (' . $controle_veterinario . ',' . $tipo_abelha . ',' . $material_biologico . ',' . $mel . ')';
 			DataGetter::getConn()->exec($sql);
 
+			if($stmt->execute()){
+				return True;
+			} else {
+				return False;
+			}
+
 		}
 
 		public function cadastrarProducao($apiario, $rotulo, $destino, $tipo, $material){
 			$sql = 'INSERT INTO PRODUCAO VALUES (' . $apiario . ',' . $rotulo . ',' . $destino . ',' . $tipo . ',' . $material . ')';
 			DataGetter::getConn->exec($sql);
 
+			if($stmt->execute()){
+				return True;
+			} else {
+				return False;
+			}
+
 		}
 
 		public function cadastrarPropriedade($endereco, $area_destinada){
 			$sql = 'INSERT INTO PROPRIEDADE VALUES (' . $endereco . ',' . $area_destinada . ')';
 			DataGetter::getConn()->exec($sql);
+
+			if($stmt->execute()){
+				return True;
+			} else {
+				return False;
+			}
+		}
+
+		public function cadastrarProducaoAnual($ano, $apicultor, $valor_da_producao){
+			$sql = 'INSERT INTO PRODUCAO_ANUAL VALUES (' . $ano . ',' . $apicultor . ',' . $valor_da_producao . ')';
+			DataGetter::getConn()->exec($sql);
+
+			if($stmt->execute()){
+				return True;
+			} else {
+				return False;
+			}
 		}
 
 		public function recuperarApiarios($filtros){

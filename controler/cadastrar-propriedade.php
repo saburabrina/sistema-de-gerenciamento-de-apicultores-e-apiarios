@@ -24,9 +24,22 @@
 		$cep = test_input($_POST['cep']);
 
 		$user = new Usuario($_SESSION['nome'], $_SESSION['cpf'], $_SESSION['email'], $_SESSION['senha']);
-		$user->cadastrarEndereco($logradouro, $numero, $complemento, $bairro, $comunidade, $cidade, $estado, $cep);
+		$status_endereco = $user->cadastrarEndereco($logradouro, $numero, $complemento, $bairro, $comunidade, $cidade, $estado, $cep);
+
+		if ($status_endereco) {
+			# code...
+		} else {
+
+		}
+
 		$endereco = $user->recuperarIdEndereco($logradouro, $numero, $complemento, $bairro, $comunidade, $cidade, $estado, $cep);
-		$user->cadastrarPropriedade($endereco, $area_destinada);
+		$status = $user->cadastrarPropriedade($endereco, $area_destinada);
+
+		if ($status) {
+			# code...
+		} else {
+
+		}
 
 	}
 ?>

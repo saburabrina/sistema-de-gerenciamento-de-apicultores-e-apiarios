@@ -18,6 +18,12 @@
 		$apiario = $_POST['apiario']['nome'];
 
 		$user = new Usuario($_SESSION['nome'], $_SESSION['cpf'], $_SESSION['email'], $_SESSION['senha']);
-		$user->cadastrarProducao($apiario, $rotulo, $destino, $tipo, $material);
+		$status = $user->cadastrarProducao($apiario, $rotulo, $destino, $tipo, $material);
+
+		if ($status) {
+			# code...
+		} else {
+
+		}
 	}
 ?>

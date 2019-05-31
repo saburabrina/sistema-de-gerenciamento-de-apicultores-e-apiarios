@@ -25,10 +25,22 @@
 		$apiario = $_POST['apiario']['nome'];
 
 		$user = new Usuario($_SESSION['nome'], $_SESSION['cpf'], $_SESSION['email'], $_SESSION['senha']);
-		$user->cadastrarControleVeterinario($apiario, $data, $condicao, $nome, $crmv);
+		$status_controle = $user->cadastrarControleVeterinario($apiario, $data, $condicao, $nome, $crmv);
+
+		if ($status_controle) {
+			# code...
+		} else {
+
+		}
 
 		$controle = $user->recuperarIdControleVeterinario($apiario, $data, $condicao, $nome, $crmv);
-		$user->cadastrarAmostra($controle, $tipo_abelha, $material_biologico, $mel);
+		$status_amostra = $user->cadastrarAmostra($controle, $tipo_abelha, $material_biologico, $mel);
+
+		if ($status_amostra) {
+			# code...
+		} else {
+
+		}
 
 		$numero_amostras = (int) $_POST['numero-amostras'];
 
@@ -37,7 +49,13 @@
 			$mel = test_input($_POST['mel-' . $i]);
 			$material_biologico = test_input($_POST['material-biologico-' . $i]);
 
-			$user->cadastrarAmostra($controle, $tipo_abelha, $material_biologico, $mel);
+			$status_amostra = $user->cadastrarAmostra($controle, $tipo_abelha, $material_biologico, $mel);
+
+			if ($status_amostra) {
+				# code...
+			} else {
+
+			}
 		}
 	}
 	
