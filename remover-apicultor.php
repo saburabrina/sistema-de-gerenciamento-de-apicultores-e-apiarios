@@ -16,7 +16,7 @@
 	}    
 	$apicultor = test_input($_GET['apicultor']);
 	$usuario = new Usuario($_SESSION['nome'], $_SESSION['cpf'], $_SESSION['email'], $_SESSION['senha']);
-	$status = $usuario->removerCaixa($apicultores[$apicultor]);
+	$status = $usuario->removerApicultor($apicultores[$apicultor]);
 	if($status){
 		echo 'Apicultor removido com sucesso';
 		$_SESSION['erro'] = true;
