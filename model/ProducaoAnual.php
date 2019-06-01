@@ -2,7 +2,7 @@
 
 	class ProducaoAnual {
 		private int $ano;
-		private string $apicultor;
+		private $apicultor;
 		private float $valor_da_producao;
 
 		function __construct($ano, $apicultor, $valor_da_producao){

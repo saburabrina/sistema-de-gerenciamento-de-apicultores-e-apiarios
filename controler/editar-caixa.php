@@ -26,7 +26,9 @@
 
 
 	  	$usuario = new Usuario($_SESSION['nome'], $_SESSION['cpf'], $_SESSION['email'], $_SESSION['senha']);
-	  	$status = $usuario->editarColmeia($especie, $origem, $data_troca);
+	  	$colmeiaId = $usuario->recuperarIdColmeia($especie, $origem, $data_troca);
+	  	$colmeia = new Colmeia($colmeiaId, $especie, $origem, $data_troca);
+	  	$status = $usuario->editarColmeia($colmeia);
 
 	  	if ($status) {
 			# code...
@@ -34,8 +36,9 @@
 
 		}
 
-	  	$colmeia = $usuario->recuperarIdColmeia($especie, $origem, $data_troca);
-	  	$status_caixa = $usuario->cadastrarCaixa($apiario, $colmeia, $material, $melgueira, $local_extracao);
+		$caixaId = $usuario->recuperarIdCaixa($apiario, $colmeia, $material, $melgueira, $local_extracao);
+	  	$caixa = new Caixa($caixaId, $apiario, $colmeia, $material, $melgueira, $local_extracao);
+	  	$status_caixa = $usuario->editarCaixa($caixa);
 
 	  	if ($status_caixa) {
 			# code...

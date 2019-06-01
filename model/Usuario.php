@@ -1,10 +1,7 @@
 <?php
 	/*
-	editar caixa
-	editar medição climatica
 	excluir medição climatica
 	buscar produção anual
-	editar produção anual
 	excluir produção anual
 	 */
 
@@ -388,6 +385,15 @@
 
 		public function recuperarIdColmeia($especie_abelha /* varchar(45) */, $origem /* varchar(45) */, $data_troca_rainha /* DATE/STRING */){
 			$stmt = DataGetter::getConn()->prepare("SELECT id FROM COLMEIA WHERE especie_abelha = " . $especie_abelha . " AND origem = " . $origem . " AND data_troca_rainha = " . $data_troca_rainha);
+			$stmt->execute();
+
+			$id = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			return $id['id'];
+		}
+
+		public function recuperarIdCaixa($apiario, $colmeia, $material, $melgueira, $local_extracao){
+			$stmt = DataGetter::getConn()->prepare("SELECT id FROM CAIXA WHERE apiario = " . $apiario . " AND colmeia = " . $colmeia . " AND material = " . $material . " AND melgueira = " . $melgueira . " AND local_extracao = " . $local_extracao);
 			$stmt->execute();
 
 			$id = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -1057,12 +1063,24 @@
 			}
 		}
 
-		public function recuperarApicultorPorAtributo($nomeAtributo, $valor){
+		/* public function recuperarApicultorPorAtributo($nomeAtributo, $valor){
 			$sql = "SELECT cpf, nome FROM APICULTOR WHERE " . $nomeAtributo . " = " . $valor;
 			$stmt = DataGetter::getConn()->prepare($sql);
 			$stmt->execute();
 
 			$apicultor = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			return $apicultor;
+		} */
+
+		public function recuperarApicultorPorAtributo($nomeAtributo, $valor){
+			$sql = "SELECT * FROM APICULTOR WHERE " . $nomeAtributo . " = " . $valor;
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+
+			$apic = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			$apicultor = new Apicultor($apic['cpf'], $apic['nome'], $apic['certificacao'], $apic['email'], $apic['telefone'], $apic['producao_anual'], $apic['perfil'], $apic['vinculo'], $apic['endereco'], $apic['trabalha_em']);
 
 			return $apicultor;
 		}
@@ -1233,6 +1251,46 @@
 		public function editarApiario($apiario){
 			$sql = "UPDATE APIARIO SET nome = '" . $apiario->getNome() . "' SET dono = '" . $apiario->getDono() . "' SET propriedade = '" . $apiario->getPropriedade() . "' . SET inscricaoEstadual = '" . $apiario->getInscricaoEstadual() . "' . SET dataFundacao = '" . $apiario->getDataFundacao() . "' . SET tipoFlorada = '" $apiario->getTipoFlorada() . "' . SET latidade = '" $apiario->getLatitude "' . SET longitudade = '" . $apiario->getLongitude() . "' . SET expandida = '" . $apiario->getExpandida() . "' . SET problemaSanitario = '" . $apiario->getProblemaSanitario() . "' . SET numeroCaixasPovoadas = '" . $apiario->getNumeroCaixasPovoadas() . "' . SET numeroCaixasVazias = '" . $apiario->getNumeroCaixasVazias() . "' . SET instalacao = '" . $apiario->getInstalacao() . "'";
 			
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+			if ($stmt->rowCount() > 0) {
+				return true;
+			}
+			return false;
+		}
+
+		public function editarCaixa($caixa){
+			$sql = "UPDATE CAIXA SET apiario = '" . $caixa->getApiario() . "' SET colmeia = '" . $caixa->getColmeia()->getId() . "' SET material = '" . $caixa->getMaterial() . "' SET melgueiras = '" . $caixa->getMelgueiras() . "' SET local_extracao = '" . $caixa->getLocalExtracao() . "' WHERE id = '" . $caixa->getId() . "'";
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+			if ($stmt->rowCount() > 0) {
+				return true;
+			}
+			return false;
+		}
+
+		public function editarColmeia($colmeia){
+			$sql = "UPDATE COLMEIA SET especie_abelha = '" . $colmeia->getEspecieAbelha() . "' SET origem = '" . $colmeia->getOrigem() . "' SET data_troca_rainha = '" . $colmeia->getDataTrocaRainha() . "' WHERE id = '" . $colmeia->getId() . "'";
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+			if ($stmt->rowCount() > 0) {
+				return true;
+			}
+			return false;
+		}
+
+		public function editarProducaoAnual($producao_anual){
+			$sql = "UPDATE COLMEIA SET valor_da_producao = '" . $producao_anual->getValorDaProducao() . "' WHERE ano = '" . $producao_anual->getAno() . "' AND apicultor = '" . $producao_anual->getApicultor() . "'";
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+			if ($stmt->rowCount() > 0) {
+				return true;
+			}
+			return false;
+		}
+
+		public function editarMedicaoClimatica($medicao_climatica){
+			$sql = "UPDATE MEDICOES_CLIMATICAS SET temperatura = '" . $medicao_climatica>getTemperatura() . "' SET umidade = '" . $medicao_climatica>getUmidade() . "' SET indice_pluviometrico = '" . $medicao_climatica>getIndicePluviometrico() . "' WHERE propriedade = '" . $medicao_climatica->getPropriedade() . "' AND data = '" . $medicao_climatica->getData();
 			$stmt = DataGetter::getConn()->prepare($sql);
 			$stmt->execute();
 			if ($stmt->rowCount() > 0) {

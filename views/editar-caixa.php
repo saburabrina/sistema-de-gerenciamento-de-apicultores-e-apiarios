@@ -251,7 +251,7 @@
                       </div>
                     </div>
 
-                    <input type="hidden" id="apiario" name="apiario" class="form-control" value="<?php echo $caixas[$_GET['caixa']]->getApiario()->getNome(); ?>">
+                    <input type="hidden" id="apiario" name="apiario" class="form-control" value="<?php echo $caixas[$_GET['caixa']]->getApiario() ?>">
                     
                     <button type="submit" name="submit" class="btn btn-success btn-block">Salvar</button>
                   </form>
