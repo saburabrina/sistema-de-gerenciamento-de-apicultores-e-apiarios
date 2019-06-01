@@ -1,9 +1,4 @@
 <?php
-	/*
-	excluir medição climatica
-	buscar produção anual
-	excluir produção anual
-	 */
 
 	require_once('DataGetter.php');
 	require_once('Apicultor.php');
@@ -547,6 +542,17 @@
 			}
 
 			return $apicultores;
+		}
+
+		public function recuperarProducaoAnual($ano, $apicultor){
+			$sql = "SELECT * FROM PRODUCAO_ANUAL WHERE ano = '" . $ano . "' AND apicultor = '" . $apicultor . "'";
+			
+			$sql->execute();
+			
+			$producao_anual = $sql->fetch(PDO:FETCH_ASSOC);
+			$resultado = new ProducaoAnual($ano, $apicultor, $producao_anual['valor_da_producao']);
+
+			return $resultado;
 		}
 
 		public function recuperarPropriedadesPorApicultor($apicultor){
@@ -1280,7 +1286,7 @@
 		}
 
 		public function editarProducaoAnual($producao_anual){
-			$sql = "UPDATE COLMEIA SET valor_da_producao = '" . $producao_anual->getValorDaProducao() . "' WHERE ano = '" . $producao_anual->getAno() . "' AND apicultor = '" . $producao_anual->getApicultor() . "'";
+			$sql = "UPDATE PRODUCAO_ANUAL SET valor_da_producao = '" . $producao_anual->getValorDaProducao() . "' WHERE ano = '" . $producao_anual->getAno() . "' AND apicultor = '" . $producao_anual->getApicultor() . "'";
 			$stmt = DataGetter::getConn()->prepare($sql);
 			$stmt->execute();
 			if ($stmt->rowCount() > 0) {
@@ -1290,7 +1296,27 @@
 		}
 
 		public function editarMedicaoClimatica($medicao_climatica){
-			$sql = "UPDATE MEDICOES_CLIMATICAS SET temperatura = '" . $medicao_climatica>getTemperatura() . "' SET umidade = '" . $medicao_climatica>getUmidade() . "' SET indice_pluviometrico = '" . $medicao_climatica>getIndicePluviometrico() . "' WHERE propriedade = '" . $medicao_climatica->getPropriedade() . "' AND data = '" . $medicao_climatica->getData();
+			$sql = "UPDATE MEDICOES_CLIMATICAS SET temperatura = '" . $medicao_climatica->getTemperatura() . "' SET umidade = '" . $medicao_climatica->getUmidade() . "' SET indice_pluviometrico = '" . $medicao_climatica->getIndicePluviometrico() . "' WHERE propriedade = '" . $medicao_climatica->getPropriedade() . "' AND data = '" . $medicao_climatica->getData() . "'";
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+			if ($stmt->rowCount() > 0) {
+				return true;
+			}
+			return false;
+		}
+
+		public function excluirMedicaoClimatica($propriedade, $data){
+			$sql = "DELETE FROM MEDICOES_CLIMATICAS WHERE propriedade = '" . $propriedade . "' AND data = '" . $data . "'";
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+			if ($stmt->rowCount() > 0) {
+				return true;
+			}
+			return false;
+		}
+
+		public function excluirProducaoAnual($ano, $apicultor){
+			$sql = "DELETE FROM PRODUCAO_ANUAL WHERE ano = '" . $ano . "' AND apicultor = '" . $apicultor . "'";
 			$stmt = DataGetter::getConn()->prepare($sql);
 			$stmt->execute();
 			if ($stmt->rowCount() > 0) {
