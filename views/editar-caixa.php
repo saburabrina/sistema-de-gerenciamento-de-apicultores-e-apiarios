@@ -3,6 +3,7 @@
   session_start();
 
   require_once("../model/Caixa.php");
+  require_once("../model/Colmeia.php");
   require_once("../model/Endereco.php");
 
   if(isset($_SESSION['caixas'])){
@@ -193,7 +194,7 @@
             <div class="offset-lg-3 col-lg-6">
               <div class="card shadow h-100 py-2">
                 <div class="card-body">
-                  <form methos="post" action="../controler/editar-caixa.php">
+                  <form method="post" action="../controler/editar-caixa.php">
 
                     <h6 class="m-0 font-weight-bold text-primary">Informações da Caixa</h6>
 
@@ -203,7 +204,7 @@
                       <div class="col-lg-5">
                         <div class="form-group">
                           <label for="melgueiras">Número de Melgueiras</label>
-                          <input type="number" id="melgueiras" name="melgueiras" class="form-control" value="<?php echo $caixas[$_GET['caixa']]->getMelgueiras(); ?>">
+                          <input type="number" id="melgueiras" name="melgueiras" class="form-control" value="<?php echo $caixas[$_GET['caixa']]->getMelgueira(); ?>">
                         </div>
                       </div>
                     </div>
@@ -232,7 +233,7 @@
                       <div class="col-lg-6">
                         <div class="form-group">
                           <label for="origem">Origem</label>
-                          <input type="text" id="origem" name="origem" class="form-control" class="form-control" value="<?php echo $caixas[$_GET['caixa']]->getOrigem(); ?>">
+                          <input type="text" id="origem" name="origem" class="form-control" class="form-control" value="<?php echo unserialize($caixas[$_GET['caixa']]->getColmeia())->getOrigem(); ?>">
                         </div>
                       </div>
                     </div>
@@ -241,19 +242,21 @@
                       <div class="col-lg-8">
                         <div class="form-group">
                           <label for="especie">Espécie de Abelha</label>
-                          <input type="text" id="especie" name="especie" class="form-control" class="form-control" value="<?php echo $caixas[$_GET['caixa']]->getEspecieAbelha(); ?>">
+                          <input type="text" id="especie" name="especie" class="form-control" class="form-control" value="<?php echo unserialize($caixas[$_GET['caixa']]->getColmeia())->getEspecieAbelha(); ?>">
                         </div>
                       </div>
 
                       <div class="col-lg-4">
                         <div class="form-group">
                           <label for="data-troca">Troca da Rainha</label>
-                          <input type="date" id="data-troca" name="data-troca" class="form-control" class="form-control" value="<?php echo $caixas[$_GET['caixa']]->getDataTrocaRainha(); ?>">
+                          <input type="date" id="data-troca" name="data-troca" class="form-control" class="form-control" value="<?php echo unserialize($caixas[$_GET['caixa']]->getColmeia())->getDataTrocaRainha(); ?>">
                         </div>
                       </div>
                     </div>
 
-                    <input type="hidden" id="apiario" name="apiario" class="form-control" value="<?php echo $caixas[$_GET['caixa']]->getApiario()->getNome(); ?>">
+                    <input type="hidden" id="apiario" name="apiario" class="form-control" value="<?php echo $caixas[$_GET['caixa']]->getApiario(); ?>">
+
+                    <input type="hidden" name="caixa" id="caixa" value="<?php echo $_GET['caixa']; ?>">
                     
                     <button type="submit" class="btn btn-success btn-block">Salvar</button>
                   </form>

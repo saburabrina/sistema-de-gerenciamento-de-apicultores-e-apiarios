@@ -27,7 +27,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Apicultores e Materiais</title>
+  <title>Cadastrar Fumegador - Apicultores e Materiais</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -77,6 +77,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="cadastrar-apicultor.php">Apicultor</a>
             <a class="collapse-item active" href="buscar-apicultor-para-cadastrar-fumegador.php">Fumegador</a>
+            <a class="collapse-item" href="buscar-apicultor-para-cadastrar-producao.php">Produção Anual</a>
           </div>
         </div>
       </li>
@@ -91,6 +92,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="busca-por-apicultor.php">Apicultor</a>
             <a class="collapse-item" href="busca-por-fumegador.php">Fumegador</a>
+            <a class="collapse-item" href="busca-por-producao-anual.php">Produção Anual</a>
           </div>
         </div>
       </li>

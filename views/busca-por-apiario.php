@@ -150,6 +150,45 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
+          <?php
+            if(isset($_SESSION['status'])){
+              if($_SESSION['status']){
+                echo '
+                  <div class="alert alert-success" role="alert">
+                    Apiário alterado com sucesso
+                  </div>
+                ';
+              } else {
+                echo '
+                  <div class="alert alert-danger" role="alert">
+                    Houve um erro ao tentar alterar o apiário
+                  </div>
+                ';
+              }
+
+              unset($_SESSION['status']);
+            }
+
+            if(isset($_SESSION['erro'])){
+              if($_SESSION['erro']){
+                echo '
+                  <div class="alert alert-success" role="alert">
+                    Apiário removido com sucesso
+                  </div>
+                ';
+              } else {
+                echo '
+                  <div class="alert alert-danger" role="alert">
+                    Houve um erro ao tentar remover o apiário
+                  </div>
+                ';
+              }
+
+              unset($_SESSION['erro']);
+            }
+          ?>
+
+
           <div class="row">
             <div class="offset-2 col-lg-8">
               <div class="card shadow h-100 py-2">
@@ -364,7 +403,7 @@
 
                           echo '<tr><td>' . $apiarios[$i]->getNome() .'</td><td>' . $apiarios[$i]->getDono() . '</td><td>' . $endereco . '</td><td>' . $apiarios[$i]->getInscricaoEstadual() . '</td><td><a href="editar-apiario.php?apiario=' . $i . '" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-pencil-alt"></i></a> <button class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#removerApiario' . $i . '"><i class="fas fa-times"></i></button></td></tr>';
                         }
-                        unset($_SESSION);
+                        //unset($_SESSION['apiarios']);
                         echo '</tbody></table></div></div></div>';
                       } else {
                         echo '
@@ -409,7 +448,7 @@
                         </div>
                         <!-- Modal footer -->
                         <div class="modal-footer">
-                          <a href="../controler/remover-apiario.php" class="btn btn-danger" data-dismiss="modal">Remover</a>
+                          <a href="../controler/remover-apiario.php?apiario=' . $i . '" class="btn btn-danger">Remover</a>
                         </div>
 
                       </div>

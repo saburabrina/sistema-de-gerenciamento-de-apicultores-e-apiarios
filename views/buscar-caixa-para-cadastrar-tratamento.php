@@ -150,7 +150,7 @@
             <div class="offset-2 col-lg-8">
               <div class="card shadow h-100 py-2">
                 <div class="card-body">
-                  <form method="post" action="../controler/buscar-caixa.php">
+                  <form method="post" action="../controler/buscar-caixa-para-cadastrar-tratamento.php">
                     <h6 class="m-0 font-weight-bold text-primary">Buscar Caixa</h6>
 
                     <hr class="sidebar-divider d-none d-md-block">
@@ -188,12 +188,22 @@
 
                     for($i=0; $i<count($caixas); $i++){
 
-                      echo '<tr><td>' . $caixas[$i]->getId() .'</td><td>' . $caixas[$i]->getApiario()->getNome() . '</td><td>' . $caixas[$i]->getMaterial() . '</td><td>' . $caixas[$i]->getMelgueiras() . '</td><td>' . $caixas[$i]->getLocalExtracao() . '</td><td><a href="cadastrar-tratamento.php?caixa=' . $i . '" class="btn btn-success btn-circle btn-sm"><i class="fas fa-plus"></i></a></td></tr>';
+                      echo '<tr><td>' . $caixas[$i]->getId() .'</td><td>' . $caixas[$i]->getApiario() . '</td><td>' . $caixas[$i]->getMaterial() . '</td><td>' . $caixas[$i]->getMelgueira() . '</td><td>' . $caixas[$i]->getLocalExtracao() . '</td><td><a href="cadastrar-tratamento.php?caixa=' . $i . '" class="btn btn-success btn-circle btn-sm"><i class="fas fa-plus"></i></a></td></tr>';
                     }
 
                     echo '</tbody></table></div></div></div>';
 
-                  }
+                    //unset($_SESSION['caixas']);
+
+                  } else {
+                      echo '
+                        <div class="card shadow h-100 py-2 mt-2">
+                          <div class="card-body">
+                            <p class="text-lg text-center">Não foram encontrados resultados</p>
+                          </div>
+                        </div>
+                      ';
+                    }
                 }
               ?>
             </div>

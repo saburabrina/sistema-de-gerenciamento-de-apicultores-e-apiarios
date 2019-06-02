@@ -243,15 +243,15 @@
                         <div class="row">
                           <div class="col-lg-6">
                             <div class="form-group">
-                              <label for="tipo-abelha">Tipo de Abelha</label>
-                              <input type="text" id="tipo-abelha" name="tipo-abelha" class="form-control" value="' . $amostras[$i]->getTipoAbelha() .'">
+                              <label for="tipo-abelha-'. $i . '">Tipo de Abelha</label>
+                              <input type="text" id="tipo-abelha-' . $i . '" name="tipo-abelha-' . $i . '" class="form-control" value="' . $amostras[$i]->getTipoAbelha() .'">
                             </div>
                           </div>
 
                           <div class="col-lg-6">
                             <div class="form-group">
-                              <label for="mel">Mel</label>
-                              <input type="text" id="mel" name="mel" class="form-control" value=" ' . $amostras[$i]->getMel() . '>
+                              <label for="mel-' . $i . '">Mel</label>
+                              <input type="text" id="mel-' . $i . '" name="mel-' . $i . '" class="form-control" value=" ' . $amostras[$i]->getMel() . '>
                             </div>
                           </div>
                         </div>
@@ -259,8 +259,8 @@
                         <div class="row">
                           <div class="col-lg-12">
                             <div class="form-group">
-                              <label for="material-biologico">Material Biológico</label>
-                              <input type="text" id="material-biologico" name="material-biologico" class="form-control" value="' . $amostras[$i]->getMaterialBiologico() .'>
+                              <label for="material-biologico-' $i . '">Material Biológico</label>
+                              <input type="text" id="material-biologico-' . $i . '" name="material-biologico-' . $i . '" class="form-control" value="' . $amostras[$i]->getMaterialBiologico() .'>
                             </div>
                           </div>
                         </div>
@@ -269,6 +269,10 @@
                     ?>
 
                     <input type="hidden" id="apiario" name="apiario" value="<?php echo $controles[$_GET['controle']]->getNome(); ?>">
+
+                    <input type="hidden" id="numeroAmostras" name="numeroAmostras" value="<?php echo count($controles[$_GET['controle']]->getAmostras());  ?>">
+
+                    <input type="hidden" name="controle" id="controle" value="<?php echo $controles[$_GET['controle']]->getId(); ?>">
 
                     <button type="submit" class="btn btn-success btn-block">Salvar</button>
                   </form>

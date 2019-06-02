@@ -3,6 +3,8 @@
   session_start();
   require_once('../model/Endereco.php');
   require_once('../model/Apiario.php');
+  require_once('../model/Propriedade.php');
+
 
 ?>
 
@@ -154,7 +156,7 @@
             <div class="offset-2 col-lg-8">
               <div class="card shadow h-100 py-2">
                 <div class="card-body">
-                  <form method="post" action="../controler/buscar-por-apiario.php">
+                  <form method="post" action="../controler/buscar-apiario-para-cadastrar-caixa.php">
                     <h6 class="m-0 font-weight-bold text-primary">Buscar Apiário</h6>
 
                     <hr class="sidebar-divider d-none d-md-block">
@@ -192,10 +194,10 @@
                         </div>
                       </div>
 
-                      <div class="col-lg-1">
+                      <div class="offset-1 col-lg-1">
                         <input type="checkbox" id="check-data-fundacao" name="check-data-fundacao">
                       </div>
-                      <div class="col-lg-5">
+                      <div class="col-lg-4">
                         <div class="form-group">
                           <label for="data-fundacao">Data Fundação</label>
                           <input type="date" id="data-fundacao" name="data-fundacao" class="form-control" onClick="selecionarCheck('check-data-fundacao')">
@@ -207,7 +209,7 @@
                       <div class="col-lg-1">
                         <input type="checkbox" id="check-latitude" name="check-latitude">
                       </div>
-                      <div class="col-lg-3">
+                      <div class="col-lg-2">
                         <div class="form-group">
                           <label for="latitude">Latitude</label>
                           <input type="text" id="latitude" name="latitude" class="form-control" onClick="selecionarCheck('check-latitude')">
@@ -217,7 +219,7 @@
                       <div class="col-lg-1">
                         <input type="checkbox" id="check-longitude" name="check-longitude">
                       </div>
-                      <div class="col-lg-3">
+                      <div class="col-lg-2">
                         <div class="form-group">
                           <label for="longitude">Longitude</label>
                           <input type="text" id="longitude" name="longitude" class="form-control" onClick="selecionarCheck('check-longitude')">
@@ -339,35 +341,35 @@
                     echo '<div class="card shadow h-100 py-2 mt-2"><div class="card-body"><div class="table-responsive"><table class="table" id="dataTable" width="100%" cellspacing="0"><thead><tr><th>Nome</th><th>Dono</th><th>Endereço</th><th>Inscrição Estadual</th><th>Ações</th></tr></thead><tfoot><tr><th>Nome</th><th>Dono</th><th>Endereço</th><th>Inscrição Estadual</th><th>Ações</th></tr></tfoot><tbody>';
 
                     for($i=0; $i<count($apiarios); $i++){
-                      $endereco = $apiarios[$i]->getEndereco()->getLogradouro();
-                      if($apiarios[$i]->getEndereco()->getNumero() != ''){
-                        $endereco .= ', ' . $apiarios[$i]->getEndereco()->getNumero(); 
+                      $endereco = $apiarios[$i]->getPropriedade()->getLogradouro();
+                      if($apiarios[$i]->getPropriedade()->getNumero() != ''){
+                        $endereco .= ', ' . $apiarios[$i]->getPropriedade()->getNumero(); 
                       }
-                      if($apiarios[$i]->getEndereco()->getComplemento() != ''){
-                        $endereco .= ', ' . $apiarios[$i]->getEndereco()->getComplemento(); 
+                      if($apiarios[$i]->getPropriedade()->getComplemento() != ''){
+                        $endereco .= ', ' . $apiarios[$i]->getPropriedade()->getComplemento(); 
                       }
-                      if($apiarios[$i]->getEndereco()->getBairro() != ''){
-                        $endereco .= ', ' . $apiarios[$i]->getEndereco()->getBairro(); 
+                      if($apiarios[$i]->getPropriedade()->getBairro() != ''){
+                        $endereco .= ', ' . $apiarios[$i]->getPropriedade()->getBairro(); 
                       }
-                      if($apiarios[$i]->getEndereco()->getComunidade() != ''){
-                        $endereco .= ', ' . $apiarios[$i]->getEndereco()->getComunidade(); 
+                      if($apiarios[$i]->getPropriedade()->getComunidade() != ''){
+                        $endereco .= ', ' . $apiarios[$i]->getPropriedade()->getComunidade(); 
                       }
-                      if($apiarios[$i]->getEndereco()->getCidade() != ''){
-                        $endereco .= ', ' . $apiarios[$i]->getEndereco()->getCidade(); 
+                      if($apiarios[$i]->getPropriedade()->getCidade() != ''){
+                        $endereco .= ', ' . $apiarios[$i]->getPropriedade()->getCidade(); 
                       }
-                      if($apiarios[$i]->getEndereco()->getEstado() != ''){
-                        $endereco .= ', ' . $apiarios[$i]->getEndereco()->getEstado(); 
+                      if($apiarios[$i]->getPropriedade()->getEstado() != ''){
+                        $endereco .= ', ' . $apiarios[$i]->getPropriedade()->getEstado(); 
                       }
-                      if($apiarios[$i]->getEndereco()->getCep() != ''){
-                        $endereco .= ', ' . $apiarios[$i]->getEndereco()->getCep(); 
+                      if($apiarios[$i]->getPropriedade()->getCep() != ''){
+                        $endereco .= ', ' . $apiarios[$i]->getPropriedade()->getCep(); 
                       }
 
-                      echo '<tr><td>' . $apiarios[$i]->getNome() .'</td><td>$apiarios[$i]->getDono()</td><td>' . $endereco . '</td><td>' . $apiarios[$i]->getInscricaoEstadual() . '<td><a href="cadastrar-caixa.php?apiario=' . $i .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-plus"></i></a></td></tr>';
+                      echo '<tr><td>' . $apiarios[$i]->getNome() .'</td><td>' . $apiarios[$i]->getDono() . '</td><td>' . $endereco . '</td><td>' . $apiarios[$i]->getInscricaoEstadual() . '<td><a href="cadastrar-caixa.php?apiario=' . $i .'" class="btn btn-success btn-circle btn-sm"><i class="fas fa-plus"></i></a></td></tr>';
                     }
 
                     echo '</tbody></table></div></div></div>';
 
-                    unset($_SESSION);
+                    //unset($_SESSION['propriedades']);
                   } else {
                     echo '
                       <div class="card shadow h-100 py-2 mt-2">

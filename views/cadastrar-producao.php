@@ -118,40 +118,8 @@
             <i class="fa fa-bars"></i>
           </button>
 
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar por..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
-
-            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
-              </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar por..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </li>
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
@@ -182,11 +150,31 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
+          <?php
+            if(isset($_SESSION['status'])){
+              if($_SESSION['status']){
+                echo '
+                  <div class="alert alert-success" role="alert">
+                    Produção cadastrada com sucesso
+                  </div>
+                ';
+              } else {
+                echo '
+                  <div class="alert alert-danger" role="alert">
+                    A produção não pôde ser cadastrada
+                  </div>
+                ';
+              }
+
+              unset($_SESSION['status']);
+            }
+          ?>
+
           <div class="row">
             <div class="offset-lg-3 col-lg-6">
               <div class="card shadow h-100 py-2">
                 <div class="card-body">
-                  <form methos="post" action="../controler/cadastrar-producao.php">
+                  <form method="post" action="../controler/cadastrar-producao.php">
                   
                     <div class="row">
                       <div class="col-lg-6">
@@ -234,7 +222,7 @@
                       <div class="col-lg-8">
                         <div class="form-group">
                           <label for="material">Material</label>
-                          <input type="text" name="material" id="material" class="custom-select">
+                          <input type="text" name="material" id="material" class="form-control">
                         </div>
                       </div>
                     </div>
@@ -258,30 +246,6 @@
 
   </div>
   <!-- End of Page Wrapper -->
-
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Deseja realmente sair?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Selecione "Sair" abaixo se você deseja sair para encerrar sua sessão</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="index.html">Sair</a>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>

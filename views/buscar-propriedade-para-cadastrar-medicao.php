@@ -210,7 +210,7 @@
             <div class="offset-1 col-lg-10">
               <div class="card shadow h-100 py-2">
                 <div class="card-body">
-                  <form method="post" action="../controler/buscar-propriedade-para-cadastrar-apiario.php">
+                  <form method="post" action="../controler/buscar-propriedade-para-cadastrar-medicao.php">
                     <h6 class="m-0 font-weight-bold text-primary">Buscar Propriedade</h6>
 
                     <hr class="sidebar-divider d-none d-md-block">

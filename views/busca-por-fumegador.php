@@ -68,6 +68,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="cadastrar-apicultor.php">Apicultor</a>
             <a class="collapse-item" href="buscar-apicultor-para-cadastrar-fumegador.php">Fumegador</a>
+            <a class="collapse-item" href="buscar-apicultor-para-cadastrar-producao.php">Produção Anual</a>
           </div>
         </div>
       </li>
@@ -82,6 +83,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="busca-por-apicultor.php">Apicultor</a>
             <a class="collapse-item active" href="busca-por-fumegador.php">Fumegador</a>
+            <a class="collapse-item" href="busca-por-producao-anual.php">Produção Anual</a>
           </div>
         </div>
       </li>
@@ -163,6 +165,24 @@
 
                   unset($_SESSION['erro']);
                 }
+
+                if(isset($_SESSION['status'])){
+                  if($_SESSION['status']){
+                    echo '
+                      <div class="alert alert-success" role="alert">
+                        Fumegador alterado com sucesso
+                      </div>
+                    ';
+                  } else {
+                    echo '
+                      <div class="alert alert-danger" role="alert">
+                        Houve um erro ao tentar alterar o fumegador
+                      </div>
+                    ';
+                  }
+
+                  unset($_SESSION['status']);
+                }
               ?>
             </div>
           </div>
@@ -224,7 +244,7 @@
                           echo '<tr><td>' . $fumegadores[$i]->getApicultor() .'</td><td>' . $fumegadores[$i]->getProdutoUtilizado() . '</td><td><a href="editar-fumegador.php?fumegador=' . $i . '" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-pencil-alt"></i></a> <button class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#removerFumegador' . $i . '"><i class="fas fa-times"></i></button></td></tr>';
                         }
 
-                        unser($_SESSION);
+                        //unser($_SESSION['fumegadores']);
                         echo '</tbody></table></div></div></div>';
 
                       } else {

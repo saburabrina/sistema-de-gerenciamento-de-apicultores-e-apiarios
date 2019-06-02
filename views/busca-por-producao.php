@@ -281,7 +281,16 @@
                         }
 
                         echo '</tbody></table></div></div></div>';
+                        //unser($_SESSION['producoes']);
 
+                      } else {
+                        echo '
+                          <div class="card shadow h-100 py-2 mt-2">
+                            <div class="card-body">
+                              <p class="text-lg text-center">Não foram encontrados resultados</p>
+                            </div>
+                          </div>
+                        ';
                       }
                     }
                   ?>

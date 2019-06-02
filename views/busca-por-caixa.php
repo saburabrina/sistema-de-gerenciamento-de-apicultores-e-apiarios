@@ -167,6 +167,24 @@
 
                   unset($_SESSION['erro']);
                 }
+
+                if(isset($_SESSION['status'])){
+                  if($_SESSION['status']){
+                    echo '
+                      <div class="alert alert-success" role="alert">
+                        O registro da caixa foi alterado com sucesso
+                      </div>
+                    ';
+                  } else {
+                    echo '
+                      <div class="alert alert-danger" role="alert">
+                        O registro da caixa não pôde ser alterado
+                      </div>
+                    ';
+                  }
+
+                  unset($_SESSION['status']);
+                }
               ?>
             </div>
           </div>
@@ -239,10 +257,11 @@
                       $c = $_SESSION['caixas'];
 
                       $caixas = array();
+                      $caixas = array();
                       for($i=0; $i<count($c); $i++){
                         $caixa = unserialize($c[$i]);
                         array_push($caixas, $caixa);
-                      }                      
+                      }                   
 
                       if(count($caixas) > 0){
                         echo '<div class="card shadow h-100 py-2 mt-2"><div class="card-body"><div class="table-responsive"><table class="table" id="dataTable" width="100%" cellspacing="0"><thead><tr><th>ID</th><th>Apiário</th><th>Material</th><th>Qtd. Melgueiras</th><th>Local de Extração</th><th>Ações</th></tr></thead><tfoot><tr><th>ID</th><th>Apiário</th><th>Material</th><th>Qtd. Melgueiras</th><th>Local de Extração</th><th>Ações</th></tr></tfoot><tbody>';
@@ -252,7 +271,7 @@
                           echo '<tr><td>' . $caixas[$i]->getId() .'</td><td>' . $caixas[$i]->getApiario() . '</td><td>' . $caixas[$i]->getMaterial() . '</td><td>' . $caixas[$i]->getMelgueira() . '</td><td>' . $caixas[$i]->getLocalExtracao() . '</td><td><a href="editar-caixa.php?caixa=' . $i . '" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-pencil-alt"></i></a> <button class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#removerCaixa' . $i . '"><i class="fas fa-times"></i></button></td></tr>';
                         }
 
-                        unser($_SESSION);
+                        //unset($_SESSION['caixas']);
                         
                         echo '</tbody></table></div></div></div>';
 

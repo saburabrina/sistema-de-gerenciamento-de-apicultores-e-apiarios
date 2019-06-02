@@ -1,6 +1,6 @@
 <?php
 
-  require_once('../model/MedicoesClimaticas.php');
+  require_once('../model/ProducaoAnual.php');
 
   session_start();
 
@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Buscar Medição - Apiários e Propriedades</title>
+  <title>Buscar Produção Anual - Apicultores e Materiais</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -25,9 +25,6 @@
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
-  <!-- Custom styles for this page -->
-  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
 
@@ -68,10 +65,9 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="buscar-propriedade-para-cadastrar-apiario.php">Apiário</a>
-            <a class="collapse-item" href="cadastrar-propriedade.php">Propriedade</a>
-            <a class="collapse-item" href="buscar-apiario-para-cadastrar-caixa.php">Caixa</a>
-            <a class="collapse-item" href="busca-propriedade-para-cadastrar-medicao.php">Medição Climática</a>
+            <a class="collapse-item" href="cadastrar-apicultor.php">Apicultor</a>
+            <a class="collapse-item" href="buscar-apicultor-para-cadastrar-fumegador.php">Fumegador</a>
+            <a class="collapse-item" href="buscar-apicultor-para-cadastrar-producao.php">Produção Anual</a>
           </div>
         </div>
       </li>
@@ -84,10 +80,9 @@
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="busca-por-apiario.php">Apiário</a>
-            <a class="collapse-item" href="busca-por-propriedade.php">Propriedade</a>
-            <a class="collapse-item" href="busca-por-caixa.php">Caixa</a>
-            <a class="collapse-item active" href="busca-por-medicao.php">Caixa</a>
+            <a class="collapse-item" href="busca-por-apicultor.php">Apicultor</a>
+            <a class="collapse-item" href="busca-por-fumegador.php">Fumegador</a>
+            <a class="collapse-item active" href="busca-por-producao-anual.php">Produção Anual</a>
           </div>
         </div>
       </li>
@@ -156,18 +151,36 @@
                   if($_SESSION['erro']){
                     echo '
                       <div class="alert alert-success" role="alert">
-                        Medição climática removida com sucesso
+                        Produção Anual removida com sucesso
                       </div>
                     ';
                   } else {
                     echo '
                       <div class="alert alert-danger" role="alert">
-                        Houve um erro ao tentar remover a medição climática
+                        Houve um erro ao tentar remover a produção anual
                       </div>
                     ';
                   }
 
                   unset($_SESSION['erro']);
+                }
+
+                if(isset($_SESSION['status'])){
+                  if($_SESSION['status']){
+                    echo '
+                      <div class="alert alert-success" role="alert">
+                        Produção Anual alterada com sucesso
+                      </div>
+                    ';
+                  } else {
+                    echo '
+                      <div class="alert alert-danger" role="alert">
+                        Houve um erro ao tentar alterar a produção anual
+                      </div>
+                    ';
+                  }
+
+                  unset($_SESSION['status']);
                 }
               ?>
             </div>
@@ -177,57 +190,44 @@
             <div class="offset-2 col-lg-8">
               <div class="card shadow h-100 py-2">
                 <div class="card-body">
-                  <form method="post" action="../controler/buscar-por-caixa.php">
-                    <h6 class="m-0 font-weight-bold text-primary">Buscar Medição Climática</h6>
+                  <form method="post" action="../controler/buscar-por-producao-anual.php">
+                    <h6 class="m-0 font-weight-bold text-primary">Buscar Produção Anual</h6>
 
                     <hr class="sidebar-divider d-none d-md-block">
 
                     <div class="row">
                       <div class="col-lg-1">
-                          <input type="checkbox" id="check-data" name="check-data">
+                        <input type="checkbox" id="check-ano" name="check-ano">
                       </div>
-                      <div class="col-lg-4">
+                      <div class="col-lg-2">
                         <div class="form-group">
-                          <label for="data">Data da Medição</label>
-                          <input type="date" id="data" name="data" class="form-control" onClick="selecionarCheck('check-data')">
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-lg-1">
-                          <input type="checkbox" id="check-temperatura" name="check-temperatura">
-                      </div>
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label for="temperatura">Temperatura</label>
-                          <input type="text" id="temperatura" name="temperatura" class="form-control" onClick="selecionarCheck('check-temperatura')">
-                        </div>
+                          <label for="ano">Ano</label>
+                          <input type="text" class="form-control" id="ano" name="ano" onClick="selecionarCheck('check-ano')">
+                        </div> 
                       </div>
 
                       <div class="col-lg-1">
-                          <input type="checkbox" id="check-umidade" name="check-umidade">
+                        <input type="checkbox" id="check-apicultor" name="check-apicultor">
                       </div>
                       <div class="col-lg-3">
                         <div class="form-group">
-                          <label for="umidade">Umidade</label>
-                          <input type="text" id="umidade" name="umidade" class="form-control" onClick="selecionarCheck('check-umidade')">
-                        </div>
+                          <label for="apicultor">CPF do Apicultor</label>
+                          <input type="text" class="form-control" id="apicultor" name="apicultor" onClick="selecionarCheck('check-apicultor')">
+                        </div> 
                       </div>
 
                       <div class="col-lg-1">
-                          <input type="checkbox" id="check-precipitacao" name="check-precipitacao">
+                        <input type="checkbox" id="check-valor" name="check-valor">
                       </div>
                       <div class="col-lg-3">
                         <div class="form-group">
-                          <label for="precipitacao">Precipitação</label>
-                          <input type="text" id="precipitacao" name="precipitacao" class="form-control" onClick="selecionarCheck('check-precipitacao')">
-                        </div>
+                          <label for="valor">Valor da Produção</label>
+                          <input type="text" class="form-control" id="valor" name="valor" onClick="selecionarCheck('check-valor')">
+                        </div> 
                       </div>
                     </div>
 
                     <button type="submit" class="btn btn-warning btn-block">Buscar</button>
-
                   </form>
                 </div>
               </div>
@@ -237,48 +237,24 @@
           <div class="row">
             <div class="col-lg-12">
                   <?php
-                    if(isset($_SESSION['medicoes'])){
-                      $m = $_SESSION['medicoes'];
+                    if(isset($_SESSION['producoes_anuais'])){
+                      $p = $_SESSION['producoes_anuais'];
 
-                      $medicoes = array();
-                      for($i=0; $i<count($m); $i++){
-                        $medicao = unserialize($m[$i]);
-                        array_push($medicoes, $medicao);
+                      $producoesAnuais = array();
+                      for($i=0; $i<count($p); $i++){
+                        $producao = unserialize($p[$i]);
+                        array_push($producoesAnuais, $producao);
                       }                      
 
-                      if(count($medicoes) > 0){
-                        echo '<div class="card shadow h-100 py-2 mt-2"><div class="card-body"><div class="table-responsive"><table class="table" id="dataTable" width="100%" cellspacing="0"><thead><tr><th>Data</th><th>Propriedade</th><th>Temperatura</th><th>Umidade</th><th>Precipitação</th><th>Ações</th></tr></thead><tfoot><tr><th>Data</th><th>Propriedade</th><th>Temperatura</th><th>Umidade</th><th>Precipitação</th><th>Ações</th></tr></tfoot><tbody>';
+                      if(count($producoesAnuais) > 0){
+                        echo '<div class="card shadow h-100 py-2 mt-2"><div class="card-body"><div class="table-responsive"><table class="table" id="dataTable" width="100%" cellspacing="0"><thead><tr><th>Ano</th><th>Apicultor</th><th>Valor da Produção</th><th>Ações</th></tr></thead><tfoot><tr><th>Ano</th><th>Apicultor</th><th>Valor da Produção<th>Ações</th></tr></tfoot><tbody>';
 
-                        for($i=0; $i<count($medicoes); $i++){
-
-                          $endereco = $medicoes[$i]->getPropriedade()->getLogradouro();
-                          if($medicoes[$i]->getPropriedade()->getNumero() != ''){
-                            $endereco .= ', ' . $medicoes[$i]->getPropriedade()->getNumero(); 
-                          }
-                          if($medicoes[$i]->getPropriedade()->getComplemento() != ''){
-                            $endereco .= ', ' . $medicoes[$i]->getPropriedade()->getComplemento(); 
-                          }
-                          if($medicoes[$i]->getPropriedade()->getBairro() != ''){
-                            $endereco .= ', ' . $medicoes[$i]->getPropriedade()->getBairro(); 
-                          }
-                          if($medicoes[$i]->getPropriedade()->getComunidade() != ''){
-                            $endereco .= ', ' . $medicoes[$i]->getPropriedade()->getComunidade(); 
-                          }
-                          if($medicoes[$i]->getPropriedade()->getCidade() != ''){
-                            $endereco .= ', ' . $medicoes[$i]->getPropriedade()->getCidade(); 
-                          }
-                          if($medicoes[$i]->getPropriedade()->getEstado() != ''){
-                            $endereco .= ', ' . $medicoes[$i]->getPropriedade()->getEstado(); 
-                          }
-                          if($medicoes[$i]->getPropriedade()->getCep() != ''){
-                            $endereco .= ', ' . $medicoes[$i]->getPropriedade()->getCep(); 
-                          }
-
-                          echo '<tr><td>' . $medicoes[$i]->getData() .'</td><td>' . $endereco . '</td><td>' . $medicoes[$i]->getTemperatura() . '</td><td>' . $medicoes[$i]->getUmidade() . '</td><td>' . $medicoes[$i]->getPrecipitação() . '</td><td><a href="editar-medicao.php?caixa=' . $i . '" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-pencil-alt"></i></a> <button class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#removerMedicao' . $i . '"><i class="fas fa-times"></i></button></td></tr>';
+                        for($i=0; $i<count($producoesAnuais); $i++){
+                          echo '<tr><td>' . $producoesAnuais[$i]->getAno() .'</td><td>' . $producoesAnuais[$i]->getApicultor() . '</td><td>' . $producoesAnuais[$i]->getValorDaProducao() . '<td><a href="editar-producao-anual.php?producao=' . $i . '" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-pencil-alt"></i></a> <button class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#removerProducaoAnual' . $i . '"><i class="fas fa-times"></i></button></td></tr>';
                         }
 
+                        //unser($_SESSION['fumegadores']);
                         echo '</tbody></table></div></div></div>';
-                       // unset($_SESSION['medicoes']);
 
                       } else {
                         echo '
@@ -295,35 +271,35 @@
           </div>
 
           <?php
-            if(isset($_SESSION['medicoes'])){
-              $m = $_SESSION['medicoes'];
+            if(isset($_SESSION['producoes_anuais'])){
+              $p = $_SESSION['producoes_anuais'];
 
-              $medicoes = array();
-              for($i=0; $i<count($m); $i++){
-                $medicao = unserialize($m[$i]);
-                array_push($medicoes, $medicao);
+              $producoesAnuais = array();
+              for($i=0; $i<count($p); $i++){
+                $producao = unserialize($p[$i]);
+                array_push($producoesAnuais, $producao);
               }                      
 
-              if(count($medicoes) > 0){
-                for($i=0; $i<count($medicoes); $i++){
+              if(count($producoesAnuais) > 0){
+                for($i=0; $i<count($producoesAnuais); $i++){
                   echo '
-                  <div class="modal fade" id="removerMedicao' . $i .'" >
+                  <div class="modal fade" id="removerProducaoAnual' . $i .'" >
                     <div class="modal-dialog">
                       <div class="modal-content">
 
                         <!-- Modal Header -->
                         <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Remover Medição Climática</h5>
+                          <h5 class="modal-title" id="exampleModalLabel">Remover Produção Anual</h5>
                           <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
 
                         <!-- Modal body -->
                         <div class="modal-body">
-                          Clique em "Remover" abaixo se você deseja remover a medição climática dos registros
+                          Clique em "Remover" abaixo se você deseja remover a produção anual dos registros
                         </div>
                         <!-- Modal footer -->
                         <div class="modal-footer">
-                          <a href="../controler/remover-medicao.php?meddicao=' . $i . '" class="btn btn-danger">Remover</a>
+                          <a href="../controler/remover-producao-anual.php?producao=' . $i . '" class="btn btn-danger">Remover</a>
                         </div>
 
                       </div>
@@ -334,7 +310,6 @@
               }
             }
           ?>
-
 
         </div>
         <!-- /.container-fluid -->
@@ -347,30 +322,6 @@
 
   </div>
   <!-- End of Page Wrapper -->
-
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Deseja realmente sair?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Selecione "Sair" abaixo se você deseja sair para encerrar sua sessão</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          <a class="btn btn-primary" href="login.html">Sair</a>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <script type="text/javascript">
     function selecionarCheck(id){
@@ -387,6 +338,15 @@
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#apicultor').mask('000.000.000-00');
+    });
+  </script>
 
 </body>
 

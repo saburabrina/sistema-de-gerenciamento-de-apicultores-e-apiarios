@@ -65,6 +65,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="cadastrar-apicultor.php">Apicultor</a>
             <a class="collapse-item" href="buscar-apicultor-para-cadastrar-fumegador.php">Fumegador</a>
+            <a class="collapse-item" href="buscar-apicultor-para-cadastrar-producao.php">Produção Anual</a>
           </div>
         </div>
       </li>
@@ -79,6 +80,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="busca-por-apicultor.php">Apicultor</a>
             <a class="collapse-item" href="busca-por-fumegador.php">Fumegador</a>
+            <a class="collapse-item" href="busca-por-producao-anual.php">Produção Anual</a>
           </div>
         </div>
       </li>

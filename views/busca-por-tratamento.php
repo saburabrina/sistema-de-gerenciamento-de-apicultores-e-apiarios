@@ -165,6 +165,24 @@
 
                   unset($_SESSION['erro']);
                 }
+
+                 if(isset($_SESSION['status'])){
+                  if($_SESSION['status']){
+                    echo '
+                      <div class="alert alert-success" role="alert">
+                        Tratamento editado com sucesso
+                      </div>
+                    ';
+                  } else {
+                    echo '
+                      <div class="alert alert-danger" role="alert">
+                        Houve um erro ao tentar editar o tratamento
+                      </div>
+                    ';
+                  }
+
+                  unset($_SESSION['status']);
+                }
               ?>
             </div>
           </div>
@@ -264,7 +282,7 @@
 
                         echo '</tbody></table></div></div></div>';
 
-                        unset($_SESSION);
+                       // unset($_SESSION['tratamentos']);
 
                       } else {
                         echo '

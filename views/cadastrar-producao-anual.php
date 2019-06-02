@@ -2,16 +2,15 @@
 
   session_start();
 
-  require_once("../model/Tratamento.php");
-  require_once("../model/Endereco.php");
+  require_once("../model/Apicultor.php");
 
-  if(isset($_SESSION['tratamentos'])){
-    $t = $_SESSION['tratamentos'];
+  if(isset($_SESSION['apicultores'])){
+    $a = $_SESSION['apicultores'];
 
-    $tratamentos = array();
-    for($i=0; $i<count($t); $i++){
-      $tratamento = unserialize($t[$i]);
-      array_push($tratamentos, $tratamento);
+    $apicultores = array();
+    for($i=0; $i<count($a); $i++){
+      $apicultor = unserialize($a[$i]);
+      array_push($apicultores, $apicultor);
     }
   }
 
@@ -28,7 +27,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Editar Tratamento</title>
+  <title>Cadastrar Produção Anual - Apicultores e Materiais</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -69,29 +68,31 @@
       <hr class="sidebar-divider">
 
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-plus"></i>
           <span>Cadastrar</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="buscar-apiario-para-cadastrar-controle-veterinario.php">Controle Veterinário</a>
-            <a class="collapse-item" href="buscar-caixa-para-cadastrar-tratamento.php">Tratamento</a>
+            <a class="collapse-item" href="cadastrar-apicultor.php">Apicultor</a>
+            <a class="collapse-item active" href="buscar-apicultor-para-cadastrar-fumegador.php">Fumegador</a>
+            <a class="collapse-item" href="buscar-apicultor-para-cadastrar-producao.php">Produção Anual</a>
           </div>
         </div>
       </li>
 
       <!-- Nav Item - Utilities Collapse Menu -->
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
           <i class="fas fa-search"></i>
           <span>Buscar por</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="busca-controle-veterinario.php">Controle Veterinário</a>
-            <a class="collapse-item active" href="busca-tratamento.php">Tratamento</a>
+            <a class="collapse-item" href="busca-por-apicultor.php">Apicultor</a>
+            <a class="collapse-item" href="busca-por-fumegador.php">Fumegador</a>
+            <a class="collapse-item" href="busca-por-producao-anual.php">Produção Anual</a>
           </div>
         </div>
       </li>
@@ -152,91 +153,71 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-
           <div class="row">
-            <div class="offset-lg-3 col-lg-6">
+            <div class="offset-lg-4 col-lg-4">
               <div class="card shadow h-100 py-2">
                 <div class="card-body">
-                  <form methos="post" action="../controler/editar-tratamento.php">
-                  
-                    <div class="row">
-                      <div class="col-lg-5">
-                        <div class="form-group">
-                          <label for="data">Data do Tratamento</label>
-                          <input type="date" id="data" name="data" class="form-control" value="<?php echo $tratamentos[$_GET['tratamento']]->getDataTratamento(); ?>">
-                        </div>
-                      </div>
-                    </div>
+                  <form method="post" action="../controler/cadastrar-producao-anual.php">
 
                     <div class="row">
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <label for="nome-veterinario">Nome do Veterinário</label>
-                          <input type="text" id="nome-veterinario" name="nome-veterinario" class="form-control" value="<?php echo $tratamentos[$_GET['tratamento']]->getNomeVeterinario(); ?>">
+                          <label for="ano">Ano</label>
+                          <input type="number" name="ano" id="ano" class="form-control">
                         </div>
                       </div>
-
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <label for="crmv">CRMV do Veterinário</label>
-                          <input type="text" id="crmv" name="crmv" class="form-control" value="<?php echo $tratamentos[$_GET['tratamento']]->getCrmvVeterinario(); ?>">
+                          <label for="valor">Valor da Produção</label>
+                          <input type="text" name="valor" id="valor" class="form-control">
                         </div>
                       </div>
                     </div>
 
-                    <div class="row">
-                      <div class="col-lg-6">
-                        <div class="form-group">
-                          <label for="doenca">Doença</label>
-                          <input type="text" id="doenca" name="doenca" class="form-control" value="<?php echo $tratamentos[$_GET['tratamento']]->getDoenca(); ?>">
-                        </div>
-                      </div>
-                    </div>
+                    <input type="hidden" id="apicultor" name="apicultor" value="<?PHP echo $_GET['apicultor']; ?>"> 
 
-                    <div class="row">
-                      <div class="col-lg-12">
-                        <div class="form-group">
-                          <label for="produto">Produto</label>
-                          <input type="text" id="produto" name="produto" class="form-control" value="<?php echo $tratamentos[$_GET['tratamento']]->getProduto(); ?>">
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">                 
-                      <div class="col-lg-9">
-                        <div class="form-group">
-                          <label for="forma-dosagem">Forma de Dosagem</label>
-                          <input type="text" id="forma-dosagem" name="forma-dosagem" class="form-control" value="<?php echo $tratamentos[$_GET['tratamento']]->getFormaDosagem(); ?>">
-                        </div>
-                      </div>
-
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label for="quantidade-doses">Qtd. Doses</label>
-                          <input type="number" id="quantidade-doses" name="quantidade-doses" class="form-control" value="<?php echo $tratamentos[$_GET['tratamento']]->getQuantidadeDoses(); ?>">
-                        </div>
-                      </div>
-                    </div>
-
-                    <input type="hidden" id="colmeia" name="colmeia" value="<?php echo $tratamentos[$_GET['tratamento']]->getColmeia(); ?>">
-
-                    <button type="submit" class="btn btn-success btn-block">Salvar</button>
+                    <button type="submit" class="btn btn-success btn-block">Cadastrar</button>
                   </form>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
         <!-- /.container-fluid -->
 
       </div>
       <!-- End of Main Content -->
-      
+
     </div>
     <!-- End of Content Wrapper -->
 
   </div>
   <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Deseja realmente sair?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Selecione "Sair" abaixo se você deseja sair para encerrar sua sessão</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <a class="btn btn-primary" href="index.html">Sair</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>

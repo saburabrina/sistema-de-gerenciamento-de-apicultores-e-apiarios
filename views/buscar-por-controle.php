@@ -110,40 +110,8 @@
             <i class="fa fa-bars"></i>
           </button>
 
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar por..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
-
-            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
-              </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar por..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </li>
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
@@ -193,6 +161,24 @@
                   }
 
                   unset($_SESSION['erro']);
+                }
+
+                if(isset($_SESSION['status'])){
+                  if($_SESSION['status']){
+                    echo '
+                      <div class="alert alert-success" role="alert">
+                        Controle Veterinário editar com sucesso
+                      </div>
+                    ';
+                  } else {
+                    echo '
+                      <div class="alert alert-danger" role="alert">
+                        Houve um erro ao tentar editar o controle veterinário
+                      </div>
+                    ';
+                  }
+
+                  unset($_SESSION['status']);
                 }
               ?>
             </div>
@@ -292,6 +278,16 @@
 
                         echo '</tbody></table></div></div></div>';
 
+                        //unset($_SESSION['controles']);
+
+                      }  else {
+                        echo '
+                          <div class="card shadow h-100 py-2 mt-2">
+                            <div class="card-body">
+                              <p class="text-lg text-center">Não foram encontrados resultados</p>
+                            </div>
+                          </div>
+                        ';
                       }
                     }
                   ?>
@@ -350,30 +346,6 @@
 
   </div>
   <!-- End of Page Wrapper -->
-
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Deseja realmente sair?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Selecione "Sair" abaixo se você deseja sair para encerrar sua sessão</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          <a class="btn btn-primary" href="login.html">Sair</a>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <script type="text/javascript">
     function selecionarCheck(id){

@@ -70,7 +70,9 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="cadastrar-apicultor.php">Apicultor</a>
-            <a class="collapse-item" href="buscar-apicultor-para-cadastrar-fumegador.php">Fumegador</a>
+            <a class="collapse-item" href="buscar-apicultor-para-cadastrar-fumegador.php">Fumegador
+            </a>
+            <a class="collapse-item" href="buscar-apicultor-para-cadastrar-producao.php">Produção Anual</a>
           </div>
         </div>
       </li>
@@ -85,6 +87,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item active" href="busca-por-apicultor.php">Apicultor</a>
             <a class="collapse-item" href="busca-por-fumegador.php">Fumegador</a>
+            <a class="collapse-item" href="busca-por-producao-anual.php">Produção Anual</a>
           </div>
         </div>
       </li>
@@ -165,6 +168,24 @@
                   }
 
                   unset($_SESSION['status']);
+                }
+
+                if(isset($_SESSION['erro'])){
+                  if($_SESSION['erro']){
+                    echo '
+                      <div class="alert alert-success" role="alert">
+                        Apicultor removido com sucesso
+                      </div>
+                    ';
+                  } else {
+                    echo '
+                      <div class="alert alert-danger" role="alert">
+                        Houve um erro ao tentar remover o apicultor
+                      </div>
+                    ';
+                  }
+
+                  unset($_SESSION['erro']);
                 }
               ?>
             </div>
@@ -484,10 +505,10 @@
                             $endereco .= ', ' . $apicultores[$i]->getEndereco()->getCep(); 
                           }
 
-                          echo '<tr><td>' . $apicultores[$i]->getCpf() .'</td><td>' . $apicultores[$i]->getNome() . '</td><td>' . $apicultores[$i]->getEmail() . '</td><td>' . $apicultores[$i]->getTelefone() . '</td><td>' . $endereco . '</td><td>' . $apicultores[$i]->getCertificacao() . '</td><td>' . $apicultores[$i]->getPerfil() . '</td><td>' . $apicultores[$i]->getVinculo() .'</td><td><a href="editar-apicultor.php?apicultor=' . $i . '" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-pencil-alt"></i></a> <button class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#removerApicultor"><i class="fas fa-times"></i></button></td></tr>';
+                          echo '<tr><td>' . $apicultores[$i]->getCpf() .'</td><td>' . $apicultores[$i]->getNome() . '</td><td>' . $apicultores[$i]->getEmail() . '</td><td>' . $apicultores[$i]->getTelefone() . '</td><td>' . $endereco . '</td><td>' . $apicultores[$i]->getCertificacao() . '</td><td>' . $apicultores[$i]->getPerfil() . '</td><td>' . $apicultores[$i]->getVinculo() .'</td><td><a href="editar-apicultor.php?apicultor=' . $i . '" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-pencil-alt"></i></a> <button class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#removerApicultor' . $i . '"><i class="fas fa-times"></i></button></td></tr>';
                         }
 
-                        unset($_SESSION);
+                        //unset($_SESSION['apicultores']);
 
                         echo '</tbody></table></div></div></div>';
 
@@ -534,7 +555,7 @@
                         </div>
                         <!-- Modal footer -->
                         <div class="modal-footer">
-                          <a href="../controler/remover-apicultor.php" class="btn btn-danger" data-dismiss="modal">Remover</a>
+                          <a href="../controler/remover-apicultor.php?apicultor=' . $i . '" class="btn btn-danger">Remover</a>
                         </div>
 
                       </div>

@@ -193,7 +193,9 @@
             <div class="offset-lg-3 col-lg-6">
               <div class="card shadow h-100 py-2">
                 <div class="card-body">
-                  <form methos="post" action="../controler/editar-propriedade.php">
+                  <form method="post" action="../controler/editar-propriedade.php">
+
+                    <input type="hidden" id="id" name="id" value=""<?php echo $propriedades[$_GET['propriedade']]->getId(); ?>"">
 
                     <div class="row">
                       <div class="col-lg-4">
@@ -267,7 +269,7 @@
                       <div class="col-lg-6">
                         <div class="form-group">
                           <label for="cep">CEP</label>
-                          <input type="text" id="cep" name="id" class="form-control" value="<?php if($propriedades[$_GET['propriedade']]->getEndereco() != null) {echo $propriedades[$_GET['propriedade']]->getEndereco()->getCep(); }?>">
+                          <input type="text" id="cep" name="cep" class="form-control" value="<?php if($propriedades[$_GET['propriedade']]->getEndereco() != null) {echo $propriedades[$_GET['propriedade']]->getEndereco()->getCep(); }?>">
                         </div>
                       </div>
                     </div>

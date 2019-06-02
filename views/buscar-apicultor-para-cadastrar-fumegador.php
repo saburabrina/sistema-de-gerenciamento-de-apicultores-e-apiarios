@@ -72,6 +72,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="cadastrar-apicultor.php">Apicultor</a>
             <a class="collapse-item active" href="buscar-apicultor-para-cadastrar-fumegador.php">Fumegador</a>
+            <a class="collapse-item" href="buscar-apicultor-para-cadastrar-producao.php">Produção Anual</a>
           </div>
         </div>
       </li>
@@ -86,6 +87,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="busca-por-apicultor.php">Apicultor</a>
             <a class="collapse-item active" href="busca-por-fumegador.php">Fumegador</a>
+            <a class="collapse-item" href="busca-por-producao-anual.php">Produção Anual</a>
           </div>
         </div>
       </li>
@@ -174,7 +176,7 @@
             <div class="offset-2 col-lg-8">
               <div class="card shadow h-100 py-2">
                 <div class="card-body">
-                  <form method="post" action="../controler/buscar-apicultor.php">
+                  <form method="post" action="../controler/buscar-apicultor-para-cadastrar-fumegador.php">
                     <h6 class="m-0 font-weight-bold text-primary">Buscar Apicultor</h6>
 
                     <hr class="sidebar-divider d-none d-md-block">
@@ -489,6 +491,16 @@
 
                         echo '</tbody></table></div></div></div>';
 
+                        //unset($_SESSION['apicultores']);
+
+                      }  else {
+                        echo '
+                          <div class="card shadow h-100 py-2 mt-2">
+                            <div class="card-body">
+                              <p class="text-lg text-center">Não foram encontrados resultados</p>
+                            </div>
+                          </div>
+                        ';
                       }
                     }
                   ?>

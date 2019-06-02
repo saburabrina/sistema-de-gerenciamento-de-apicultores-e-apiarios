@@ -112,40 +112,8 @@
             <i class="fa fa-bars"></i>
           </button>
 
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar por..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
-
-            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
-              </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar por..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </li>
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
@@ -176,11 +144,31 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
+          <?php
+            if(isset($_SESSION['status'])){
+              if($_SESSION['status']){
+                echo '
+                  <div class="alert alert-success" role="alert">
+                    Propriedade cadastrada com sucesso
+                  </div>
+                ';
+              } else {
+                echo '
+                  <div class="alert alert-danger" role="alert">
+                    A propriedade não pôde ser cadastrada
+                  </div>
+                ';
+              }
+
+              unset($_SESSION['status']);
+            }
+          ?>
+
           <div class="row">
             <div class="offset-lg-3 col-lg-6">
               <div class="card shadow h-100 py-2">
                 <div class="card-body">
-                  <form methos="post" action="../controler/cadastrar-propriedade.php">
+                  <form method="post" action="../controler/cadastrar-propriedade.php">
 
                     <div class="row">
                       <div class="col-lg-4">
@@ -254,7 +242,7 @@
                       <div class="col-lg-6">
                         <div class="form-group">
                           <label for="cep">CEP</label>
-                          <input type="text" id="cep" name="id" class="form-control">
+                          <input type="text" id="cep" name="cep" class="form-control">
                         </div>
                       </div>
                     </div>
