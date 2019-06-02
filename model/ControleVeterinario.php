@@ -9,14 +9,16 @@
         private $tipo_abelha;
         private $material_biologico;
         private $mel;
+        private $amostras;
 
-        function __construct($id, $apiario, $data_exame, $cond_vet_geral, $nome_vet, $crmv_vet) {
+        function __construct($id, $apiario, $data_exame, $cond_vet_geral, $nome_vet, $crmv_vet, $amostras) {
 			$this->id = $id;
 			$this->apiario = $apiario;
 			$this->data_exame = $data_exame;
 			$this->cond_vet_geral = $cond_vet_geral;
 			$this->nome_vet = $nome_vet;
 			$this->crmv_vet = $crmv_vet;
+			$this->amostras = $amostras;
 		}
 
 		public function getId(){
@@ -65,6 +67,14 @@
 	
 		public function setCRMVVet($crmv_vet){
 			$this->crmv_vet = $crmv_vet;
+		}
+
+		public function getAmostras(){
+			return $this->amostras;
+		}
+	
+		public function setAmostras($amostras){
+			$this->amostras = $amostras;
 		}
 	}
 ?>

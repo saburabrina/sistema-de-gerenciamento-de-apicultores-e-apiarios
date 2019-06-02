@@ -209,6 +209,139 @@
 			}
 		}
 
+		public function cadastrarCaixa($apiario, $colmeia, $material, $melgueira /* int */ , $local_extracao){
+			$sql = 'INSERT INTO CAIXA (apiario, colmeia, material, melgueira , local_extracao) VALUES ("' . $apiario . '", ' . $colmeia . ', "' . $material . '", ' . $melgueira . ', "' . $local_extracao . '")';
+			$stmt = DataGetter::getConn()->prepare($sql);
+			if($stmt->execute()){
+				return True;
+			} else {
+				return False;
+			}
+		}
+		public function cadastrarColmeia($especie_abelha /* varchar(45) */, $origem /* varchar(45) */, $data_troca_rainha /* DATE/STRING */){
+			$sql = 'INSERT INTO COLMEIA (especie_abelha, origem, data_troca_rainha) VALUES ("' . $especie_abelha . '", "' . $origem . '", "' . $data_troca_rainha . '")';
+			$stmt = DataGetter::getConn()->prepare($sql);
+			if($stmt->execute()){
+				return True;
+			} else {
+				return False;
+			}
+		}
+
+		public function cadastrarControleVeterinario($apiario, $data_exame, $condicao_vet_geral, $nome_veterinario, $crmv_veterinario){
+			$sql = 'INSERT INTO CONTROLE_VETERINARIO (apiario, data_exame, condicao_vet_geral, nome_veterinario, crmv_veterinario) VALUES ("' . $apiario . '","' . $data_exame . '","' . $condicao_vet_geral . '","' . $nome_veterinario . '","' . $crmv_veterinario . '")';
+			$stmt = DataGetter::getConn()->prepare($sql);
+			if($stmt->execute()){
+				return True;
+			} else {
+				return False;
+			}
+		}
+
+		public function cadastrarAmostra($controle_veterinario, $tipo_abelha, $material_biologico, $mel){
+			$sql = 'INSERT INTO AMOSTRA (controle_veterinario, tipo_abelha, material_biologico, mel) VALUES (' . $controle_veterinario . ',"' . $tipo_abelha . '","' . $material_biologico . '","' . $mel . '")';
+			$stmt = DataGetter::getConn()->prepare($sql);
+			if($stmt->execute()){
+				return True;
+			} else {
+				return False;
+			}
+		}
+
+		public function cadastrarProducao($apiario, $rotulo, $destino, $tipo, $material){
+			$sql = 'INSERT INTO PRODUCAO VALUES ("' . $apiario . '","' . $rotulo . '","' . $destino . '","' . $tipo . '","' . $material . '")';
+			$stmt = DataGetter::getConn()->prepare($sql);
+			if($stmt->execute()){
+				return True;
+			} else {
+				return False;
+			}
+		}
+
+		public function cadastrarPropriedade($endereco, $area_destinada){
+			$sql = 'INSERT INTO PROPRIEDADE (area_destinada, endereco) VALUES (' . $area_destinada . ',' . $endereco . ')';
+			$stmt = DataGetter::getConn()->prepare($sql);
+			if($stmt->execute()){
+				return True;
+			} else {
+				return False;
+			}
+		}
+
+		public function cadastrarTratamento($colmeia, $quantidadeDoses, $formaDosagem, $doenca, $produto, $dataTratamento, $nomeVeterinario, $crmvVeterinario){
+			$sql = 'INSERT INTO TRATAMENTO VALUES (' . $colmeia . ', ' . $quantidadeDoses . ',"' . $formaDosagem . '", "' . $doenca . '", "' . $produto . '", "' . $dataTratamento . '", "' . $nomeVeterinario . '", "' . $crmvVeterinario . '")';
+			$stmt = DataGetter::getConn()->prepare($sql);
+			if($stmt->execute()){
+				return True;
+			} else {
+				return False;
+			}
+		}
+
+		public function recuperarIdColmeia($especie_abelha /* varchar(45) */, $origem /* varchar(45) */, $data_troca_rainha /* DATE/STRING */){
+			$sql = "SELECT id FROM COLMEIA WHERE especie_abelha = '" . $especie_abelha . "' AND origem = '" . $origem . "' AND data_troca_rainha = '" . $data_troca_rainha . "'";
+			$stmt = DataGetter::getConn()->prepare($sql);
+
+			$stmt->execute();
+			$id = $stmt->fetch(PDO::FETCH_ASSOC);
+			return $id['id'];
+		}
+
+		public function recuperarIdControleVeterinario($apiario, $data_exame, $condicao_vet_geral, $nome_veterinario, $crmv_veterinario){
+			$stmt = DataGetter::getConn()->prepare("SELECT id FROM CONTROLE_VETERINARIO WHERE apiario = '" . $apiario . "' AND data_exame = '" . $data_exame . "' AND condicao_vet_geral = '" . $condicao_vet_geral . "' AND nome_veterinario = '" . $nome_veterinario . "' AND crmv_veterinario = '" . $crmv_veterinario . "'");
+			$stmt->execute();
+			$id = $stmt->fetch(PDO::FETCH_ASSOC);
+			return $id['id'];
+		}
+		
+		public function recuperarIdCaixa($apiario, $colmeia, $material, $melgueira, $local_extracao){
+			$stmt = DataGetter::getConn()->prepare("SELECT id FROM CAIXA WHERE apiario = " . $apiario . " AND colmeia = " . $colmeia . " AND material = " . $material . " AND melgueira = " . $melgueira . " AND local_extracao = " . $local_extracao);
+			$stmt->execute();
+			$id = $stmt->fetch(PDO::FETCH_ASSOC);
+			return $id['id'];
+		}
+
+		public function recuperarIdEndereco($logradouro, $numero, $complemento, $bairro, $comunidade, $cidade, $estado, $cep){
+			$stmt = DataGetter::getConn()->prepare("SELECT id FROM ENDERECO WHERE logradouro = '" . $logradouro . "' AND numero = " . $numero . " AND complemento = '" . $complemento . "' AND bairro = '" . $bairro . "' AND comunidade = '" . $comunidade . "' AND cidade = '" . $cidade . "' AND estado = '" . $estado . "' AND cep = '" . $cep . "'");
+			
+			$stmt->execute();
+			$id = $stmt->fetch(PDO::FETCH_ASSOC);
+			return $id['id'];
+		}
+
+		public function recuperarCaixaPorId($id){
+			$stmt = DataGetter::getConn()->prepare("SELECT * FROM CAIXA WHERE CAIXA.id = " . $id);
+			$stmt->execute();
+			$caixa = $stmt->fetch(PDO::FETCH_ASSOC);
+			$caixaClasse = new Caixa($caixa['id'], $caixa['apiario'], $caixa['colmeia'], $caixa['material'], $caixa['melgueira'], $caixa['local_extracao']);
+			return $caixaClasse;
+		}
+
+		public function editarCaixa($caixa){
+			$sql = "UPDATE CAIXA SET apiario = '" . $caixa->getApiario() . "', material = '" . $caixa->getMaterial() . "', melgueiras = " . $caixa->getMelgueira() . ",  local_extracao = '" . $caixa->getLocalExtracao() . "' WHERE id = " . $caixa->getId();
+
+			echo $sql;
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+			if ($stmt->rowCount() > 0) {
+				return true;
+			}
+			return false;
+		}
+
+		public function editarColmeia($colmeia){
+			$sql = "UPDATE COLMEIA SET especie_abelha = '" . $colmeia->getEspecieAbelha() . "',  origem = '" . $colmeia->getOrigem() . "', data_troca_rainha = '" . $colmeia->getDataTrocaRainha() . "' WHERE id = " . $colmeia->getId();
+
+			echo $sql;
+
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+			if ($stmt->rowCount() > 0) {
+				return true;
+			}
+			return false;
+		}
+
 		public function editarApicultor($apicultor){
 
 			$sql = "UPDATE APICULTOR SET nome = '" . $apicultor->getNome() . "', certificacao = '" . $apicultor->getCertificacao() . "', email = '" . $apicultor->getEmail() . "', telefone = '" . $apicultor->getTelefone() . "', perfil = '" . $apicultor->getPerfil() . "', vinculo = '" . $apicultor->getVinculo() . "' WHERE cpf = '" . $apicultor->getCpf() . "'";
@@ -248,9 +381,28 @@
 			}
 		}
 
-		public function cadastrarTratamento($colmeia, $quantidadeDoses, $formaDosagem, $doenca, $produto, $dataTratamento, $nomeVeterinario, $crmvVeterinario){
-			$sql = 'INSERT INTO TRATAMENTO VALUES (' . $colmeia . ', ' . $quantidadeDoses . ',"' . $formaDosagem . '", "' . $doenca . '", "' . $produto . '", "' . $dataTratamento . '", "' . $nomeVeterinario . '", "' . $crmvVeterinario . '")';
-			DataGetter::getConn()->exec($sql);
+		public function cadastrarEndereco($logradouro, $numero, $complemento, $bairro, $comunidade, $cidade, $estado, $cep){
+
+			$sql = 'SELECT * FROM ENDERECO WHERE cep = "' . $cep . '" AND cidade = "' . $cidade . '" AND estado = "' . $estado . '" AND bairro = "' . $bairro . '" AND logradouro = "' . $logradouro . '" AND numero = ' . $numero . ' AND complemento = "' . $complemento . '" AND comunidade = "' . $comunidade . '"';
+
+			$stmt = DataGetter::getConn()->prepare($sql);
+
+			$stmt->execute();
+
+			$endereco = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			if(!$endereco) {
+				$sql = 'INSERT INTO ENDERECO (cep, cidade, estado, bairro, logradouro, numero, complemento, comunidade)VALUES("' . $cep . '","' . $cidade . '","' . $estado . '","' . $bairro . '","' . $logradouro . '",' . $numero . ',"' . $complemento . '","' . $comunidade . '")';
+			
+				$stmt = DataGetter::getConn()->prepare($sql);
+				if($stmt->execute()){
+					return True;
+				} else {
+					return False;
+				}
+			} else {
+				return False;
+			}
 		}
 
 		public function recuperarApiarios($filtros){
@@ -453,7 +605,7 @@
 		public function recuperarCaixas($filtros){
 
 			if(count($filtros) > 0){
-				$sql = "SELECT * FROM CAIXA WHERE ";
+				$sql = "SELECT CAIXA.*, COLMEIA.id as idColmeia, COLMEIA.especie_abelha as especie_abelha, COLMEIA.origem as origem, COLMEIA.data_troca_rainha as data_troca_rainha FROM CAIXA, COLMEIA WHERE CAIXA.colmeia = COLMEIA.id AND ";
 
 				$jaTem = False;
 
@@ -503,7 +655,7 @@
 
 			$caixas = array();
 			while($caixa = $stmt->fetch(PDO::FETCH_ASSOC)){
-				array_push($caixas, new Caixa($caixa['id'], $caixa['apiario'], $caixa['colmeia'], $caixa['material'], $caixa['melgueira'], $caixa['local_extracao']));
+				array_push($caixas, new Caixa($caixa['id'], $caixa['apiario'], new Colmeia($caixa['idColmeia'], $caixa['especie_abelha'], $caixa['origem'], $caixa['data_troca_rainha']), $caixa['material'], $caixa['melgueira'], $caixa['local_extracao']));
 			}
 
 			return $caixas;
@@ -994,7 +1146,16 @@
 
 			$controles = array();
 			while($controle = $stmt->fetch(PDO::FETCH_ASSOC)){
-				array_push($controles, new ControleVeterinario($controle['id'], $controle['apiario'], $controle['data_exame'], $controle['condicao_vet_geral'], $controle['nome_veterinario'], $controle['crmv_veterinario']));
+				$sql_amostra = "SELECT * FROM AMOSTRA WHERE controle_veterinario = " . $controle['id'];
+				$stmt_amostra = DataGetter::getConn()->prepare($sql_amostra);
+				$stmt_amostra->execute();
+
+				$amostras = array();
+				while($amostra = $stmt_amostra->fetch(PDO::FETCH_ASSOC)){
+					array_push($amostras, new Amostra($amostra['controle_veterinario'], $amostra['tipo_abelha'], $amostra['material_biologico'], $amostra['mel']));
+				}
+
+				array_push($controles, new ControleVeterinario($controle['id'], $controle['apiario'], $controle['data_exame'], $controle['condicao_vet_geral'], $controle['nome_veterinario'], $controle['crmv_veterinario'], $amostras));
 			}
 
 			return $controles;
@@ -1051,8 +1212,71 @@
 			return $condicoes;
 		}
 
-		public function alterarPropriedade($propriedade){
-			$sql = "UPDATE PROPRIEDADE SET endereco = " . $propriedade->getEndereco()->getId() . " SET area_destinada = " . $propriedade->getAreaDestinada() . " WHERE id = " . $propriedade->getId();
+		public function editarPropriedade($propriedade){
+			$sql = "UPDATE PROPRIEDADE SET area_destinada = " . $propriedade->getAreaDestinada() . " WHERE id = " . $propriedade->getId();
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+
+			$contador = 0;
+
+			if($stmt->rowCount() > 0){
+				$contador += 1;
+			} 
+
+			$sql = "UPDATE ENDERECO SET logradouro = '" . $propriedade->getEndereco()->getLogradouro() . "', numero = " . $propriedade->getEndereco()->getNumero() . ", complemento = '" . $propriedade->getEndereco()->getComplemento() . "', bairro = '" . $propriedade->getEndereco()->getBairro() . "', comunidadde = " . $propriedade->getEndereco()->getComunidade() . "', cidade = '" . $propriedade->getEndereco()->getCidade() . "', estado = " . $propriedade->getEndereco()->getEstado() . "', cep = '" . $propriedade->getEndereco()->getCep() . "'";
+
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+
+			if($stmt->rowCount() > 0){
+				$contador += 1;
+			}
+
+			return $contador;
+		}
+
+		public function editarTratamento($tratamento){
+			$sql = "UPDATE TRATAMENTO SET quantidade_doses = " . $tratamento->getQuantidadeDoses() . ", forma_dosagem = '" . $tratamento->getFormaDosagem() . "', doenca = '" . $tratamento->getDoenca() . "', produto = '" . $tratamento->getProdutoUtilizado() . "', data_tratamento = '" . $tratamento->getDataTratamento() . "', nome_veterinario = '" . $tratamento->getNomeVeterinario() . "', crmv_veterinario = '" . $tratamento->getCRMVVeterinario() . "' WHERE colmeia = " . $tratamento->getColmeia();
+
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+
+			if($stmt->rowCount() > 0){
+				return true;
+			}
+
+			return false;
+		}
+
+		public function editarControleVeterinario($controleVeterinario){
+			$sql = "UPDATE CONTROLE_VETERINARIO SET data_exame = " . $controleVeterinario->getDataExame() . " SET condicao_vet_geral = " . $controleVeterinario->getCondVetGeral() . " SET nome_veterinario = " . $controleVeterinario->getNomeVet() . " SET crmv_veterinario = " . $controleVeterinario->getCRMVVet() . " WHERE apiario = " . $controleVeterinario->getApiario();
+
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+
+			$contador = 0;
+
+			if($stmt->rowCount() > 0){
+				$contador += 1;
+			}
+
+			$amostras = $controleVeterinario->getAmostras();
+			for($i=0; $i<count($amostras); $i++){
+				$sql = "UPDATE AMOSTRA SET tipo_abelha = '" . $amostras[$i]->getTipoAbelha() . "', material_biologico = '" . $amostras[$i]->getMaterialBiologico() . "', mel = '" . $amostras[$i]->getMel() . "' WHERE controle_veterinario = " . $amostras[$i]->getControleVeterinario();
+
+				$stmt = DataGetter::getConn()->prepare($sql);
+				$stmt->execute();
+
+				if($stmt->rowCount() > 0){
+					$contador += 1;
+				}
+			}
+
+			return $contador;
+		}
+
+		public function editarProducao($producao){
+			$sql = "UPDATE PRODUCAO SET rotulo = " . $producao->getRotulo() . " SET destino = " . $producao->getDestino() . " SET tipo = " . $producao->getTipo() . " SET material = " . $producao->getMaterial() . " WHERE apiario = " . $producao->getApiario();
 			$stmt = DataGetter::getConn()->prepare($sql);
 			$stmt->execute();
 
@@ -1060,30 +1284,6 @@
 				return true;
 			} else {
 				return false;
-			}
-		}
-
-		public function alterarControleVeterinario($controleVeterinario){
-			$sql = "UPDATE CONTROLE_VETERINARIO SET apiario = " . $controleVeterinaio->getApiario() . " SET data_exame = " . $controleVeterinario->getDataExame() . " SET condicao_vet_geral = " . $controleVeterinario->getCondicaoVetGeral() . " SET nome_veterinario = " . $controleVeterinario->getNomeVeterinario() . " SET crmv_veterinario = " . $controleVeterinario->getCrmvVeterinario() . " WHERE id = " . $controleVeterinario->getId();
-			$stmt = DataGetter::getConn()->prepare($sql);
-			$stmt->execute();
-
-			if($stmt->rowCount() > 0){
-				return 1;
-			} else {
-				return 0;
-			}
-		}
-
-		public function alterarProducao($producao){
-			$sql = "UPDATE PRODUCAO SET rotulo = " . $producao->getRotulo() . " SET destino = " . $producao->getDestino() . " SET tipo = " . $producao->getTipo() . " SET material = " . $producao->getMaterial() . " WHERE apiario = " . $producao->getApiario();
-			$stmt = DataGetter::getConn()->prepare($sql);
-			$stmt->execute();
-
-			if($stmt->rowCount() > 0){
-				return 1;
-			} else {
-				return 0;
 			}
 		}
 
@@ -1450,6 +1650,130 @@
 			} else {
 				return False;
 			}
+		}
+
+		public function editarFumegador($fumegador) {
+			$sql = "UPDATE FUMEGADOR SET produto_utilizado = '" . $fumegador->getProdutoUtilizado() . "' WHERE apicultor = '" . $fumegador->getApicultor() . "'";
+
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+
+			if ($stmt->rowCount() > 0) {
+				return true;
+			}
+
+			return false;
+		}
+
+		public function editarProducaoAnual($producao_anual){
+			$sql = "UPDATE PRODUCAO_ANUAL SET valor_da_producao = '" . $producao_anual->getValorDaProducao() . "', ano = '" . $producao_anual->getAno() . "' WHERE apicultor = '" . $producao_anual->getApicultor() . "'";
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+			if ($stmt->rowCount() > 0) {
+				return true;
+			}
+			return false;
+		}
+
+		public function editarApiario($apiario){
+			$sql = "UPDATE APIARIO SET nome = '" . $apiario->getNome() . "', dono = '" . $apiario->getDono() . "', propriedade = " . $apiario->getPropriedade() . ", inscricao_estadual = '" . $apiario->getInscricaoEstadual() . "', data_fundacao = '" . $apiario->getDataFundacao() . "', tipo_florada = '" . $apiario->getTipoFlorada() . "', latitude = " . $apiario->getLatitude() . ", longitude = " . $apiario->getLongitude() . ", expandida = " . $apiario->getExpandida() . ",  problema_sanitario = " . $apiario->getProblemaSanitario() . ", numero_colmeias_povoadas = " . $apiario->getNumeroCaixasPovoadas() . ", numero_colmeias_vazias = " . $apiario->getNumeroCaixasVazias() . ", tipo_instalacao = '" . $apiario->getInstalacao() . "'";
+
+			echo $sql;
+			
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+			if ($stmt->rowCount() > 0) {
+				return true;
+			}
+			return false;
+		}
+
+		public function cadastrarProducaoAnual($ano, $apicultor, $valor_da_producao){
+			$sql = 'INSERT INTO PRODUCAO_ANUAL VALUES (' . $ano . ',"' . $apicultor . '",' . $valor_da_producao . ')';
+
+			$stmt = DataGetter::getConn()->prepare($sql);
+			if($stmt->execute()){
+				return True;
+			} else {
+				return False;
+			}
+		}
+
+		public function recuperarProducaoAnual($filtros){
+			if(count($filtros) > 0){
+				$sql = "SELECT * FROM PRODUCAO_ANUAL WHERE";
+
+				$jaTem = False;
+
+				if($filtros['apicultor'] != ''){
+					if($jaTem){
+						$sql .= ' AND apicultor LIKE "%' . $filtros['apicultor'] . '%"';
+					} else {
+						$sql .= ' apicultor LIKE "%' . $filtros['apicultor'] . '%"';
+						$jaTem = True;
+					}
+				}
+
+				if($filtros['ano'] != ''){
+					if($jaTem){
+						$sql .= ' AND ano LIKE "%' . $filtros['ano'] . '%"';
+					} else {
+						$sql .= ' ano LIKE "%' . $filtros['ano'] . '%"';
+						$jaTem = True;
+					}
+				}
+
+				if($filtros['valor'] != ''){
+					if($jaTem){
+						$sql .= ' AND valor_da_producao LIKE "%' . $filtros['valor'] . '%"';
+					} else {
+						$sql .= ' valor_da_producao LIKE "%' . $filtros['valor'] . '%"';
+						$jaTem = True;
+					}
+				}
+			} else {
+				$sql = "SELECT * FROM PRODUCAO_ANUAL";
+			}
+			
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+
+			$producoes = array();
+			while($producao = $stmt->fetch(PDO::FETCH_ASSOC)){
+				array_push($producoes, new ProducaoAnual($producao['ano'], $producao['apicultor'], $producao['valor_da_producao']));
+			}
+
+			return $producoes;
+		}
+
+		public function removerProducaoAnual($producao){
+			$sql = "DELETE FROM PRODUCAO_ANUAL WHERE ano = '" . $producao->getAno() . "' AND apicultor = '" . $producao->getApicultor() . "' AND valor_da_producao = " . $producao->getValorDaProducao();
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+			if ($stmt->rowCount() > 0) {
+				return true;
+			}
+			return false;
+		}
+
+		public function removerApiario($apiario){
+			$sql = "DELETE FROM APIARIO WHERE nome = '" . $apiario->getNome() . "' AND dono = '" . $apiario->getDono();
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+			if ($stmt->rowCount() > 0) {
+				return true;
+			}
+			return false;
+		}
+
+		public function removerApicultor($apicultor){
+			$sql = "DELETE FROM APICULTOR WHERE cpf = '" . $apicultor->getCpf();
+			$stmt = DataGetter::getConn()->prepare($sql);
+			$stmt->execute();
+			if ($stmt->rowCount() > 0) {
+				return true;
+			}
+			return false;
 		}
 	}
 
