@@ -27,8 +27,10 @@
 	  	array_push($c, $caixa);
 	  }
 
+	  var_dump($c);
+
 	  $_SESSION['caixas'] = $c;
-	  header('Location: ../views/buscar-propriedade-para-cadastrar-apiario.php');
+	  //header('Location: ../views/buscar-propriedade-para-cadastrar-apiario.php');
 	}
 
 ?>

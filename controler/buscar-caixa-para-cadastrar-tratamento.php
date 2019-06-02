@@ -66,15 +66,12 @@
 
 	  $c = array();
 	  for($i=0; $i<count($caixas); $i++){
-	  	$caixas[$i]->setColmeia(serialize($caixas[$i]->getColmeia()));
 	  	$caixa = serialize($caixas[$i]);
 	  	array_push($c, $caixa);
 	  }
 
-	  var_dump($c);
-
 	  $_SESSION['caixas'] = $c;
-	  header('Location: ../views/busca-por-caixa.php');
+	  header('Location: ../views/buscar-caixa-para-cadastrar-tratamento.php');
 
 	  /*$filtros = array("nome" => $nome, "dono" => $dono, "inscricao_estadual" => $inscricaoEstadual, "data_fundacao" => $dataFundacao, "latitude" => $latitude, "longitude" => $longitude, "tipo_instalacao" => $tipoInstalacao, "logradouro" => $logradouro, "numero" => $numero, "complemento" => $complemento, "bairro" => $bairro, "comunidade" => $comunidade, "cidade" => $cidade, "estado" => $estado, "cep" => $cep);
 	
